@@ -1,0 +1,50 @@
+### Variable réutilisable pour l'URL de base
+@baseUrl = http://localhost:3000
+#* {{baseUrl}} est une variable définie en haut de du fichier .http, permet en cas de changement de port de changer uniquement cette variable 
+
+
+### GET — Récupérer un objet existant (cas normal, doit réussir)
+GET {{baseUrl}}/objet/1
+
+### ============================================================
+### GET — Cas d'erreur : identifiant inexistant
+GET {{baseUrl}}/objet/99999
+
+### =========================================================
+# ###* POST — Créer un objet (cas normal, doit réussir avec 201)
+#* POST {{baseUrl}}depot/1/objet
+#* Content-Type: application/json
+
+#* {
+#*   "titre": "Vélo enfant",
+#*   "categorie_id": 2,
+#*   "poids_kg": 5.5
+#* }
+
+
+### POST — Cas d'erreur : corps incomplet (champ obligatoire manquant)
+POST {{baseUrl}}/objet
+Content-Type: application/json
+
+{
+  "categorie_id": 2
+}
+
+
+### PATCH — Modifier le statut d'un objet (cas normal)
+PATCH {{baseUrl}}/objet/1/status
+Content-Type: application/json
+
+{
+  "statut": "en_rayon",
+  "prix": 15
+}
+
+
+### PATCH — Cas d'erreur : valeur d'enum invalide
+PATCH {{baseUrl}}/objet/1/status
+Content-Type: application/json
+
+{
+  "statut": "valeur_qui_nexiste_pas"
+}

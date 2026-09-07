@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3000
+
+### POST — Créer une personne (cas normal)
+POST {{baseUrl}}/depot
+Content-Type: application/json
+
+{
+  "personne_id": 1,
+  "nom": "Holochon",
+  "prenom": "Paul",
+  "telephone": "095678",
+  "adherente": "Non"
+},

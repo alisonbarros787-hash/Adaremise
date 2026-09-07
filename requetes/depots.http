@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:3000
+
+### GET — Un dépôt existant avec sa donatrice et ses objets
+GET {{baseUrl}}/depot/1
+
+### GET — Cas d'erreur : id inexistant
+GET {{baseUrl}}/depot/99999
+
+### POST — Créer un dépôt (cas normal)
+POST {{baseUrl}}/depot
+Content-Type: application/json
+
+{
+  "personne_id": 1,
+  "date_depot": "2026-09-05",
+  "type": "boutique"
+}
+
+### POST — Cas d'erreur : valeur d'enum invalide pour "type"
+POST {{baseUrl}}/depot
+Content-Type: application/json
+
+{
+  "personne_id": 1,
+  "date_depot": "2026-09-05",
+  "type": "type_qui_nexiste_pas"
+}

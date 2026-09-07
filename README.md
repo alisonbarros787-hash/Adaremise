@@ -43,5 +43,3 @@ adapi/
     Comment installer et lancer le projet ? (variables d’environnement, import de la base, commande de démarrage)
     Quelles routes existent, et que renvoient-elles ?
     Comment tester l’API ?
-
-Écris-le pour quelqu’un qui découvre ton projet et qui n’a pas ta machine.

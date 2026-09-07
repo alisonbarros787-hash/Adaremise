@@ -1,0 +1,8 @@
+@baseUrl = http://localhost:3000
+
+### GET — Une categorie existante 
+GET {{baseUrl}}/categorie/1
+
+### GET — Cas d'erreur : id inexistant
+GET {{baseUrl}}/depot/99999
+

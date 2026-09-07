@@ -8,5 +8,25 @@
     "express": "^5.2.1",
     "pg": "^8.23.0",
     "swagger-ui-express": "^5.0.1"
-  }
+  },
+  "name": "adapi",
+  "version": "1.0.0",
+  "description": "Construis l’API REST de La Remise — celle que ton équipe reprendra en S15 pour AdaRemise.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisonbarros787-hash/Adapi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/alisonbarros787-hash/Adapi/issues"
+  },
+  "homepage": "https://github.com/alisonbarros787-hash/Adapi#readme"
 }

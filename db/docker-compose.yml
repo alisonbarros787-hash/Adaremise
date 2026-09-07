@@ -1,0 +1,18 @@
+
+
+services:
+  db:
+    image: postgres:16
+    container_name: adapi-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: adapi_user
+      POSTGRES_PASSWORD: adapi_pwd
+      POSTGRES_DB: adapi-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - adapi-db-data:/var/lib/postgresql/data
+
+volumes:
+  adapi-db-data:

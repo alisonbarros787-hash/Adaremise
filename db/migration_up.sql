@@ -1,3 +1,4 @@
+-- Active: 1788619068739@@127.0.0.1@5432@adapi
 -- =====================================================================
 --  Adatabase — La Remise
 --  migration_up.sql — création des types et des tables

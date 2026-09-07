@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adapi — Résumé du projet</title>
+<style>
+  :root{
+    --bg: #F7F8FA;
+    --paper: #FFFFFF;
+    --ink: #1D2433;
+    --ink-soft: #4B5468;
+    --line: #E1E5EC;
+
+    --step1: #2E7D6B;   /* vert = semaine 13 / lecture */
+    --step1-bg: #E7F4F0;
+
+    --step2: #2A5FA5;   /* bleu = semaine 14 / écriture */
+    --step2-bg: #E8F0FA;
+
+    --warn: #B4560F;    /* orange = pièges / attention */
+    --warn-bg: #FDEEE0;
+
+    --forbid: #B0273A;  /* rouge = interdit */
+    --forbid-bg: #FBE7EA;
+
+    --bonus: #6B4CA3;   /* violet = bonus */
+    --bonus-bg: #F0EBFA;
+
+    --defense: #1D2433; /* soutenance */
+    --defense-bg: #EDEEF2;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    line-height:1.55;
+    padding: 32px 16px 80px;
+  }
+
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  header.hero{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 24px;
+    margin-bottom: 28px;
+  }
+  header.hero h1{
+    margin:0 0 6px;
+    font-size: 1.7rem;
+    letter-spacing: -0.01em;
+  }
+  header.hero p{
+    margin:0;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  .leg-step1{background:var(--step1-bg); color:var(--step1);}
+  .leg-step1 .dot{background:var(--step1);}
+  .leg-step2{background:var(--step2-bg); color:var(--step2);}
+  .leg-step2 .dot{background:var(--step2);}
+  .leg-warn{background:var(--warn-bg); color:var(--warn);}
+  .leg-warn .dot{background:var(--warn);}
+  .leg-forbid{background:var(--forbid-bg); color:var(--forbid);}
+  .leg-forbid .dot{background:var(--forbid);}
+  .leg-bonus{background:var(--bonus-bg); color:var(--bonus);}
+  .leg-bonus .dot{background:var(--bonus);}
+
+  section{
+    margin-bottom: 34px;
+  }
+
+  .section-title{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .section-num{
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.95rem;
+    color:#fff;
+    flex-shrink:0;
+  }
+  .section-title h2{
+    margin:0;
+    font-size: 1.15rem;
+  }
+
+  .card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+
+  .card p{margin: 0 0 8px;}
+  .card p:last-child{margin-bottom:0;}
+
+  code{
+    background: #F1F2F5;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 0.88em;
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+  }
+  pre{
+    background: #1D2433;
+    color: #E7ECF5;
+    padding: 14px 16px;
+    border-radius: 10px;
+    overflow-x:auto;
+    font-size: 0.82rem;
+    line-height:1.5;
+  }
+  pre code{ background:none; padding:0; color:inherit; }
+
+  .checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .checklist li:last-child{border-bottom:none;}
+
+  .checkbox{
+    width:20px;
+    height:20px;
+    border-radius:6px;
+    border: 2px solid var(--ink-soft);
+    flex-shrink:0;
+    margin-top:2px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: background 0.15s, border-color 0.15s;
+    background:#fff;
+  }
+  .checkbox.checked{
+    background: var(--step1);
+    border-color: var(--step1);
+  }
+  .checkbox.checked::after{
+    content:"✓";
+    color:#fff;
+    font-size:13px;
+    font-weight:700;
+  }
+  .checklist .txt{flex:1;}
+  .checklist .txt strong{display:block; margin-bottom:2px;}
+  .checklist .txt .sub{color:var(--ink-soft); font-size:0.88rem;}
+
+  table.routes{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+  table.routes th{
+    text-align:left;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--line);
+    color: var(--ink-soft);
+    font-weight:600;
+  }
+  table.routes td{
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.routes tr:last-child td{border-bottom:none;}
+  .verb{
+    display:inline-block;
+    font-weight:700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size:0.78rem;
+  }
+  .verb.get{background:var(--step1-bg); color:var(--step1);}
+  .verb.post{background:var(--step2-bg); color:var(--step2);}
+  .verb.patch{background:var(--bonus-bg); color:var(--bonus);}
+
+  .status{
+    font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+
+  .box{
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    font-size:0.92rem;
+  }
+  .box strong{display:block; margin-bottom:4px;}
+  .box.warn{background:var(--warn-bg); color:#7A3B0A; border:1px solid #F0C79A;}
+  .box.forbid{background:var(--forbid-bg); color:#7C1826; border:1px solid #EFB3BB;}
+  .box.step1{background:var(--step1-bg); color:#164F42; border:1px solid #B5DED2;}
+  .box.step2{background:var(--step2-bg); color:#153E6E; border:1px solid #B7D0EE;}
+
+  .arbo{
+    background:#1D2433;
+    color:#E7ECF5;
+    padding:16px 18px;
+    border-radius:10px;
+    font-family:"SFMono-Regular", Consolas, Menlo, monospace;
+    font-size:0.8rem;
+    line-height:1.6;
+    overflow-x:auto;
+    white-space:pre;
+  }
+
+  .final{
+    background: var(--paper);
+    border: 2px solid var(--forbid);
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align:center;
+  }
+  .final strong{
+    color: var(--forbid);
+    font-size:1.05rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>Adapi — ce que je dois faire</h1>
+    <p>Résumé pas à pas du projet. Tout ce qui est important est en couleur.</p>
+  </header>
+
+  <div class="legend">
+    <span class="leg-step1"><span class="dot"></span>Semaine 13 (lecture)</span>
+    <span class="leg-step2"><span class="dot"></span>Semaine 14 (écriture)</span>
+    <span class="leg-warn"><span class="dot"></span>Piège / attention</span>
+    <span class="leg-forbid"><span class="dot"></span>Interdit</span>
+    <span class="leg-bonus"><span class="dot"></span>Bonus (optionnel)</span>
+  </div>
+
+  <!-- 0. Contexte -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--ink-soft);">0</div>
+      <h2>Le contexte, en une phrase</h2>
+    </div>
+    <div class="card">
+      <p>Je dois construire un serveur (une API REST) qui prend les données d'une base PostgreSQL déjà fournie et les envoie en JSON à qui les demande. Ce serveur servira plus tard (semaine 15) pour un projet en équipe.</p>
+      <p>Je ne dois <strong>pas</strong> concevoir la base de données, elle est déjà faite. Je dois juste la connecter et exposer des routes.</p>
+    </div>
+  </section>
+
+  <!-- 1. Installation -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--step1);">1</div>
+      <h2>Étape 1 — Installer la base de données</h2>
+    </div>
+    <div class="card">
+      <p>Je lance ces trois commandes, dans l'ordre, dans un terminal :</p>
+      <pre><code>psql -U postgres -c "CREATE DATABASE laremise;"
+psql -U postgres -d laremise -f db/migration_up.sql
+psql -U postgres -d laremise -f db/seed.sql</code></pre>
+      <div class="box step1">
+        <strong>Comment vérifier que ça a marché</strong>
+        Après l'import, la base doit contenir : 79 objets, 30 dépôts, 22 personnes, dont 32 objets "en rayon". Si les nombres ne correspondent pas, je corrige l'import avant de continuer.
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Arborescence -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--step1);">2</div>
+      <h2>Étape 2 — Créer l'arborescence exacte du projet</h2>
+    </div>
+    <div class="card">
+      <p>Je crée ces fichiers et dossiers, avec exactement ces noms :</p>
+      <div class="arbo">adapi/
+├── package.json
+├── .env                  (jamais versionné !)
+├── .env.example          (le modèle, lui, est versionné)
+├── .gitignore
+├── README.md
+├── db/
+│   ├── migration_up.sql  (déjà fourni)
+│   └── seed.sql
+├── requetes/             (mes requêtes de test)
+└── server/
+    ├── index.js          (app Express, middlewares, montage des routes)
+    ├── db.js             (pool pg, une seule instance exportée)
+    └── routes/
+        ├── categories.js
+        ├── objets.js
+        ├── personnes.js
+        ├── depots.js
+        └── stats.js</div>
+      <div class="box forbid">
+        <strong>Règle stricte</strong>
+        Un fichier de routes = une ressource. Je n'ai pas le droit de mettre toutes les routes dans un seul fichier.
+      </div>
+      <div class="box forbid">
+        <strong>Le fichier .env</strong>
+        Il contient le mot de passe de ma base. Je l'ajoute à <code>.gitignore</code> AVANT mon tout premier commit. Si je l'envoie une seule fois sur GitHub, le mot de passe est compromis même si je le supprime après.
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Semaine 13 -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--step1);">3</div>
+      <h2>Étape 3 — Semaine 13 : construire le socle + les routes de lecture</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Ce qu'il faut mettre en place avant les routes :</strong></p>
+      <ul class="checklist" id="list-socle">
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Un serveur Express qui démarre</strong><span class="sub">Le port vient d'une variable d'environnement, pas d'un chiffre écrit en dur.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Une connexion PostgreSQL avec le driver pg</strong><span class="sub">Un seul Pool, créé dans server/db.js, et rien d'autre.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Chaque route renvoie du JSON</strong><span class="sub">Avec le bon code de statut HTTP à chaque fois.</span></span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p><strong>Les 5 routes de lecture à créer :</strong></p>
+      <table class="routes">
+        <tr><th>Route</th><th>Ce qu'elle renvoie</th><th>Statut</th></tr>
+        <tr><td><span class="verb get">GET</span> /api/categories</td><td>Toutes les catégories (id + libelle)</td><td class="status">200</td></tr>
+        <tr><td><span class="verb get">GET</span> /api/objets</td><td>Liste des objets, avec le libellé de leur catégorie</td><td class="status">200</td></tr>
+        <tr><td><span class="verb get">GET</span> /api/objets?statut=&categorie_id=</td><td>Même liste, filtrée (les 2 filtres sont facultatifs)</td><td class="status">200</td></tr>
+        <tr><td><span class="verb get">GET</span> /api/objets/:id</td><td>Un objet + sa catégorie + son dépôt + le nom de la donatrice</td><td class="status">200 / 404</td></tr>
+        <tr><td><span class="verb get">GET</span> /api/depots/:id</td><td>Un dépôt + sa donatrice + la liste des objets qu'il contient</td><td class="status">200 / 404</td></tr>
+      </table>
+    </div>
+
+    <div class="box warn">
+      <strong>Piège à connaître pour la soutenance</strong>
+      Un filtre qui ne trouve rien → je réponds 200 avec une liste vide.<br>
+      Un identifiant qui n'existe pas (ex: /api/objets/9999) → je réponds 404.<br>
+      Je dois savoir expliquer pourquoi c'est différent.
+    </div>
+
+    <div class="card">
+      <p><strong>Comment gérer les 2 filtres optionnels sans risque :</strong></p>
+      <p>Je n'ai pas le droit de construire la requête morceau par morceau (ça ouvre une faille de sécurité). J'utilise <code>COALESCE</code> à la place :</p>
+      <pre><code>SELECT o.id, o.libelle, o.statut, o.prix, c.libelle AS categorie
+FROM objet o
+JOIN categorie c ON c.id = o.categorie_id
+WHERE o.statut       = COALESCE($1::statut_objet, o.statut)
+  AND o.categorie_id = COALESCE($2::integer,      o.categorie_id)
+ORDER BY o.id DESC;</code></pre>
+      <p class="sub" style="color:var(--ink-soft); font-size:0.88rem;">Si le paramètre vaut null, la condition devient toujours vraie → le filtre ne s'applique pas. Je dois savoir réexpliquer ça en soutenance.</p>
+    </div>
+
+    <div class="box step1">
+      <strong>Conseil de l'énoncé</strong>
+      Je fais fonctionner GET /api/objets en entier (du navigateur jusqu'à la base) avant d'écrire une deuxième route.
+    </div>
+  </section>
+
+  <!-- 4. Semaine 14 -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--step2);">4</div>
+      <h2>Étape 4 — Semaine 14 : les routes d'écriture</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Les 5 routes à créer, dans l'ordre logique du métier :</strong></p>
+      <table class="routes">
+        <tr><th>Route</th><th>Ce qu'elle fait</th><th>Statut</th></tr>
+        <tr><td><span class="verb post">POST</span> /api/personnes</td><td>Crée une donatrice (nom, prenom, telephone?, adherente?)</td><td class="status">201 / 400</td></tr>
+        <tr><td><span class="verb post">POST</span> /api/depots</td><td>Enregistre un dépôt (personne_id, date_depot, type)</td><td class="status">201 / 400</td></tr>
+        <tr><td><span class="verb post">POST</span> /api/depots/:id/objets</td><td>Ajoute un objet au dépôt (libelle, poids_kg, etat_arrivee, categorie_id)</td><td class="status">201 / 400</td></tr>
+        <tr><td><span class="verb patch">PATCH</span> /api/objets/:id/statut</td><td>Change le statut d'un objet (statut, prix?)</td><td class="status">200 / 400 / 404</td></tr>
+        <tr><td><span class="verb get">GET</span> /api/stats</td><td>3 indicateurs : objets par statut, poids total reçu, poids détourné de la déchetterie</td><td class="status">200</td></tr>
+      </table>
+    </div>
+
+    <div class="box warn">
+      <strong>Pourquoi PATCH et pas PUT, pourquoi pas de DELETE</strong>
+      Je modifie une seule propriété (le statut) → PATCH, pas PUT (qui remplace tout).<br>
+      Un objet ne disparaît jamais chez La Remise, il devient "recycle" → donc pas de route DELETE du tout.
+    </div>
+
+    <div class="card">
+      <p><strong>Après un POST ou un PATCH, je renvoie la ressource à jour directement avec RETURNING</strong>, pas besoin de refaire un second SELECT :</p>
+      <pre><code>INSERT INTO objet (libelle, poids_kg, etat_arrivee, categorie_id, depot_id)
+VALUES ($1, $2, $3::etat_objet, $4, $5)
+RETURNING *;
+-- le statut prend sa valeur DEFAULT 'arrive' automatiquement
+-- je ne dois PAS l'envoyer depuis le client</code></pre>
+    </div>
+
+    <div class="card">
+      <p><strong>Ce que je dois valider avant d'écrire en base (obligatoire) :</strong></p>
+      <ul class="checklist" id="list-valid">
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Vérifier que les champs obligatoires sont présents</strong></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Vérifier les types</strong><span class="sub">poids_kg doit être un nombre, pas une chaîne de caractères.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Vérifier les valeurs d'enum contre une liste blanche</strong><span class="sub">Avant de les envoyer à PostgreSQL, pas après.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Répondre 400 avec un message clair</strong><span class="sub">Quand les données sont invalides.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Ne jamais laisser une erreur PostgreSQL brute remonter au client</strong></span></li>
+      </ul>
+    </div>
+
+    <div class="box warn">
+      <strong>Le piège de l'enum</strong>
+      Si le client envoie <code>statut: "n_importe_quoi"</code> et que je le transmets tel quel à PostgreSQL, la base rejette la valeur et mon serveur répond 500 par erreur.<br>
+      Le bon réflexe : je vérifie moi-même la valeur AVANT de l'envoyer à la base, et je réponds 400 si elle est invalide.
+    </div>
+  </section>
+
+  <!-- 5. Tests -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--step2);">5</div>
+      <h2>Étape 5 — Écrire mes tests</h2>
+    </div>
+    <div class="card">
+      <ul class="checklist" id="list-tests">
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Utiliser le client HTTP de VS Code</strong><span class="sub">Les fichiers de requêtes de test doivent être versionnés dans requetes/.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Chaque route a au moins une requête de test qui passe</strong></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Au moins 3 requêtes testent des cas d'erreur</strong><span class="sub">Un identifiant inexistant, un corps incomplet, une valeur d'enum invalide.</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Sécurité obligatoire -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--forbid);">6</div>
+      <h2>Règle de sécurité obligatoire : jamais de concaténation SQL</h2>
+    </div>
+    <div class="card">
+      <p>Toute valeur qui vient du client (paramètre d'URL, filtre, corps de requête) doit passer par un paramètre SQL ($1, $2...). Jamais collée directement dans le texte de la requête.</p>
+      <pre><code>// INTERDIT — permet une injection SQL
+const q = `SELECT * FROM objets WHERE statut = '${req.query.statut}'`;
+
+// CORRECT — la valeur passe à part
+const q = 'SELECT * FROM objets WHERE statut = $1';
+const { rows } = await pool.query(q, [req.query.statut]);</code></pre>
+    </div>
+  </section>
+
+  <!-- 7. Interdits -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--forbid);">7</div>
+      <h2>Liste complète de ce qui est interdit</h2>
+    </div>
+    <div class="card">
+      <div class="box forbid"><strong>Interdit 1</strong>Utiliser un ORM (Sequelize, Prisma, TypeORM…) — je dois écrire le SQL moi-même.</div>
+      <div class="box forbid"><strong>Interdit 2</strong>Concaténer des valeurs venant du client dans une requête SQL.</div>
+      <div class="box forbid"><strong>Interdit 3</strong>Versionner le fichier .env ou écrire un mot de passe en dur dans le code.</div>
+      <div class="box forbid"><strong>Interdit 4</strong>Mettre toutes les routes dans un seul fichier.</div>
+      <div class="box forbid"><strong>Interdit 5</strong>Transmettre une valeur d'enum à PostgreSQL sans l'avoir vérifiée avant.</div>
+    </div>
+  </section>
+
+  <!-- 8. Bonus -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--bonus);">8</div>
+      <h2>Bonus — seulement après avoir tout fini ci-dessus</h2>
+    </div>
+    <div class="card">
+      <ul class="checklist">
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Documenter l'API avec Swagger, servie sur /api-docs</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Calculer les stats en une seule requête avec COUNT(*) FILTER (WHERE …)</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Un middleware de gestion d'erreurs centralisé</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Un middleware de log (méthode, URL, durée de chaque requête)</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">La pagination : GET /api/objets?page=2&limite=10</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">La recherche d'une donatrice : GET /api/personnes?q=dupont avec ILIKE</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Le tri : GET /objets?tri=prix&ordre=desc</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Connecter une petite page front qui consomme l'API avec fetch</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Des tests automatisés Jest sur les fonctions de validation</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Déployer l'API en ligne</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9. README -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--ink-soft);">9</div>
+      <h2>Étape 6 — Rédiger le README</h2>
+    </div>
+    <div class="card">
+      <p>Le README doit répondre à ces 3 questions, écrites pour quelqu'un qui n'a pas ma machine :</p>
+      <ul class="checklist">
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Comment installer et lancer le projet ?</strong><span class="sub">Variables d'environnement, import de la base, commande de démarrage.</span></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Quelles routes existent, et que renvoient-elles ?</strong></span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt"><strong>Comment tester l'API ?</strong></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10. Rendu -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--forbid);">10</div>
+      <h2>Modalités de rendu</h2>
+    </div>
+    <div class="card">
+      <p>Travail individuel. Dépôt GitHub personnel, avec le lien déposé sur Moodle.</p>
+      <div class="box forbid">
+        <strong>Deadline exacte</strong>
+        Dernier commit poussé sur main avant mercredi de la semaine 14, minuit.<br>
+        La soutenance a lieu le lendemain matin (jeudi semaine 14).
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Soutenance -->
+  <section>
+    <div class="section-title">
+      <div class="section-num" style="background:var(--defense);">11</div>
+      <h2>La soutenance</h2>
+    </div>
+    <div class="card">
+      <p>Individuelle. Déroulement : présentation → démonstration en direct → explication d'un choix technique → bilan → questions du jury.</p>
+      <p>Je dois arriver avec ma base déjà importée et mes requêtes de test déjà prêtes (le temps de préparation n'est pas compté).</p>
+      <p><strong>9 questions auxquelles je dois savoir répondre :</strong></p>
+      <ul class="checklist">
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Étape par étape, que se passe-t-il entre GET /objets/3 et la réponse reçue ?</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Pourquoi j'ai séparé mes fichiers comme ça ?</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Montrer une requête paramétrée + expliquer ce qui se passerait sans le paramètre</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Différence entre un filtre qui ne trouve rien et un id qui n'existe pas</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Montrer un cas d'erreur : que renvoie le serveur, et pourquoi ce code ?</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Pourquoi PATCH sur le statut, et pourquoi pas de DELETE ?</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Expliquer le filtre COALESCE quand le paramètre est vide</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Où est le mot de passe de la base, et pourquoi là ?</span></li>
+        <li><span class="checkbox" onclick="toggle(this)"></span><span class="txt">Si on me demande une nouvelle route demain, par où je commence ?</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="final">
+    <strong>Ordre à suivre, sans exception</strong>
+    <p style="margin:8px 0 0;">Base de données → Arborescence → Semaine 13 (lecture) → Semaine 14 (écriture) → Tests → README → Push avant mercredi minuit → Soutenance jeudi matin.<br>Je ne commence les bonus qu'après avoir terminé tout le reste.</p>
+  </div>
+
+</div>
+
+<script>
+function toggle(el){
+  el.classList.toggle('checked');
+}
+</script>
+</body>
+</html>
