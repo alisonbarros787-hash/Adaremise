@@ -5,11 +5,9 @@ Construis l’API REST de La Remise — celle que ton équipe reprendra en S15 p
 
 ## Objectif
 
-Jusqu’ici, tu as écrit des requêtes SQL dans un terminal. Personne d’autre que toi ne pouvait les exécuter.
+Construire un serveur qui expose ces données à d’autres programmes. Une application front, un script, un téléphone : n’importe qui pourra demander des données au serveur en HTTP, et recevoir du JSON en réponse.
 
-Tu vas maintenant construire un serveur qui expose ces données à d’autres programmes. Une application front, un script, un téléphone : n’importe qui pourra demander des données à ton serveur en HTTP, et recevoir du JSON en réponse.
-
-C’est ce qu’on appelle une API REST. C’est la brique qui manquait entre ta base de données et une vraie application.
+C’est ce qu’on appelle une API REST. C’est la brique  entre une base de données et une vraie application.
 
 
 
@@ -40,6 +38,32 @@ adapi/
 
 ## Questions 
 
-    Comment installer et lancer le projet ? (variables d’environnement, import de la base, commande de démarrage)
-    Quelles routes existent, et que renvoient-elles ?
-    Comment tester l’API ?
+  ### Comment installer et lancer le projet ? (variables d’environnement, import de la base, commande de démarrage)
+  - Prérequis :
+  Node.js installé
+  PostgreSQL installé et lancé localement
+   - les dependances :
+   npm install
+   - lencer le projet :
+   npm start
+
+ ### Quelles routes existent, et que renvoient-elles ?
+  - Les differentes routes :
+    - Lesroutes sont entreposer dans le dossiers routes lui meme dans le dossier server/
+     - ROUTE : categorie
+      - ROUTE : depot
+       - ROUTE : objet
+        - ROUTE : personne
+          - ROUTE : stat
+
+
+  ### Comment tester l’API ?
+    - Dans le dossier requete/ il y a un dossier par route qui peut etre tester (cela ne fonctionne pas)
+
+
+
+
+expliquer le project
+montrer une requete
+expliquer les routes 
+lancer le project
