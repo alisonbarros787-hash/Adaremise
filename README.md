@@ -23,7 +23,12 @@ adapi/
 ├── db/
 │   ├── migration_up.sql  
 │   └── seed.sql
-├── requetes/             
+├── requetes/ 
+|   ├── categories.http
+|   ├── depots.http
+|   ├── objets.http
+|   ├── personnes.http
+|   └── stats.http   
 └── server/
     ├── index.js          
     ├── db.js             
@@ -44,26 +49,20 @@ adapi/
   PostgreSQL installé et lancé localement
    - les dependances :
    npm install
-   - lencer le projet :
-   npm start
+   - lancer le projet :
+   npm run dev
 
  ### Quelles routes existent, et que renvoient-elles ?
   - Les differentes routes :
     - Lesroutes sont entreposer dans le dossiers routes lui meme dans le dossier server/
-     - ROUTE : categorie
+      - ROUTE : categorie
       - ROUTE : depot
-       - ROUTE : objet
-        - ROUTE : personne
-          - ROUTE : stat
+      - ROUTE : objet
+      - ROUTE : personne
+      - ROUTE : stat
 
 
   ### Comment tester l’API ?
     - Dans le dossier requete/ il y a un dossier par route qui peut etre tester (cela ne fonctionne pas)
 
 
-
-
-expliquer le project
-montrer une requete
-expliquer les routes 
-lancer le project

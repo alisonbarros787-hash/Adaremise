@@ -9,7 +9,7 @@ const routerObjet = express.Router();
 
 routerObjet.get('/', async (req, res) => {
     try {
-        const { categorie_id, statut } = req.query;
+         const { categorie_id, statut } = req.query; // req.query = Paramètres après ? dans l'URL	(ex : ?id=5)
 
         const result = await pool.query(
             `SELECT o.*, c.libelle 
@@ -32,7 +32,7 @@ routerObjet.get('/', async (req, res) => {
 
 routerObjet.get('/:id', async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.params; // req.params = Paramètres de route (définis avec :)( ex : /users/:id)
 
         const result = await pool.query(
             `SELECT o.*, c.libelle, d.type, p.nom 
@@ -60,7 +60,7 @@ routerObjet.get('/:id', async (req, res) => {
 // ============================================================
 routerObjet.patch('/:id/status', async (req, res) => {
     try {
-        const { statut, prix } = req.body;
+        const { statut, prix } = req.body; // req.body	Données envoyées dans le corps de la requête (POST/PUT)
         const { id } = req.params;
 
         const STATUT = ['arrive', 'en_reparation', 'en_rayon', 'vendu', 'recycle'];

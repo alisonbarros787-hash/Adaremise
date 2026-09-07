@@ -1,4 +1,3 @@
-console.log("test")
 import express from 'express'
 import cors from 'cors'
 
@@ -13,7 +12,7 @@ import routerStat from './routes/stats.js'
 const app = express()
  
 app.use(cors())
-// Importe le middleware CORS, Il sert à autoriser un navigateur (ex: front React sur localhost:5173)
+// Importe le middleware CORS, Il sert à autoriser un navigateur (ex: React sur localhost:5173)
 // fait des requêtes vers l'API, tourne sur (localhost:3000).
 // Sans lui, le navigateur bloque ces requêtes par sécurité (voir l'exercice CORS du TP).
 
@@ -47,7 +46,7 @@ app.get("/health", (req, res) => {
 
 
 app.listen(3000, () => {
-    console.log("ok")
+    console.log("✅ Fonctionne sur le port 3000")
 });
 // Démarre le serveur, qui se met à écouter les requêtes entrantes sur le
 // port 3000. La fonction callback (() => { console.log("ok") }) s'exécute

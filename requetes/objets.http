@@ -6,31 +6,11 @@
 ### GET — Récupérer un objet existant (cas normal, doit réussir)
 GET {{baseUrl}}/objet/1
 
-### ============================================================
+### ==========================================================
 ### GET — Cas d'erreur : identifiant inexistant
 GET {{baseUrl}}/objet/99999
 
 ### =========================================================
-# ###* POST — Créer un objet (cas normal, doit réussir avec 201)
-#* POST {{baseUrl}}depot/1/objet
-#* Content-Type: application/json
-
-#* {
-#*   "titre": "Vélo enfant",
-#*   "categorie_id": 2,
-#*   "poids_kg": 5.5
-#* }
-
-
-### POST — Cas d'erreur : corps incomplet (champ obligatoire manquant)
-POST {{baseUrl}}/objet
-Content-Type: application/json
-
-{
-  "categorie_id": 2
-}
-
-
 ### PATCH — Modifier le statut d'un objet (cas normal)
 PATCH {{baseUrl}}/objet/1/status
 Content-Type: application/json
