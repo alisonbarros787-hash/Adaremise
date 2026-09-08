@@ -3,16 +3,16 @@
 services:
   db:
     image: postgres:16
-    container_name: adapi-db
+    container_name: adaremise-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: adapi_user
-      POSTGRES_PASSWORD: adapi_pwd
-      POSTGRES_DB: adapi-db
+      POSTGRES_USER: adaremise_user
+      POSTGRES_PASSWORD: adaremise_pwd
+      POSTGRES_DB: adaremise-db
     ports:
       - "5432:5432"
     volumes:
-      - adapi-db-data:/var/lib/postgresql/data
+      - adaremise-db-data:/var/lib/postgresql/data
 
 volumes:
-  adapi-db-data:
+  adaremise-db-data:

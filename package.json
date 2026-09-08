@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "vite": "^8.2.2"
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -15,11 +16,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alisonbarros787-hash/Adapi.git"
+    "url": "git+https://github.com/alisonbarros787-hash/Adaremise.git"
   },
   "keywords": [],
   "author": "",

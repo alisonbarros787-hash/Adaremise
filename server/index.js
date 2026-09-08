@@ -23,11 +23,11 @@ app.use(express.json())
 // d'une requête (req.body). Sans lui, req.body serait "undefined" même si le client envoie bien des données 
 
 
-app.use("/categorie", routerCategorie);
-app.use("/depot", routerDepot);
-app.use("/personne", routerPersonne);
-app.use("/objet", routerObjet);
-app.use("/stat", routerStat);
+app.use("/api/categories", routerCategorie);
+app.use("/api/depots", routerDepot);
+app.use("/api/personnes", routerPersonne);
+app.use("/api/objets", routerObjet);
+app.use("/api/stats", routerStat);
 
 
 app.get("/", async (req, res) => {
