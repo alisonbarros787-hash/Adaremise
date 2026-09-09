@@ -1,7 +1,7 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3000/api
 
 ### POST — Créer une personne (cas normal)
-POST {{baseUrl}}/depot
+POST {{baseUrl}}/personnes
 Content-Type: application/json
 
 {
@@ -10,4 +10,4 @@ Content-Type: application/json
   "prenom": "Paul",
   "telephone": "095678",
   "adherente": "Non"
-},
+}

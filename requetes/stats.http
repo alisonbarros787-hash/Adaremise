@@ -1,7 +1,7 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3000/api
 
 ### GET — Une Statistique, objets par statut, poids total reçu, poids détourné de la déchetterie
-GET {{baseUrl}}/statut/1
+GET {{baseUrl}}/statuts/1
 
 ### GET — Cas d'erreur : id inexistant
-GET {{baseUrl}}/depot/99999
+GET {{baseUrl}}/statuts/99999

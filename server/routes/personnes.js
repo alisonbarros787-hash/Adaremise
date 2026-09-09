@@ -4,6 +4,7 @@ import { pool } from "../db.js";
 const routerPersonne = express.Router();
 
 
+
 // ROUTE POST : Crée une donatrice (nom, prenom, telephone?, adherente?):
 routerPersonne.post('/', async (req, res) => {
     const {id, nom, prenom, telephone, adherente} = req.body
@@ -20,3 +21,4 @@ routerPersonne.post('/', async (req, res) => {
 });
 
 export default routerPersonne
+
