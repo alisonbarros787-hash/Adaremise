@@ -12,11 +12,11 @@ routerObjet.get('/', async (req, res) => {
          const { categorie_id, statut } = req.query; // req.query = Paramètres après ? dans l'URL	(ex : ?id=5)
 
         const result = await pool.query(
-            `SELECT o.*, c.libelle 
+            `SELECT o.libelle AS objet_libelle, c.libelle AS categorie_libelle
              FROM objet o 
              JOIN categorie c ON o.categorie_id = c.id
              WHERE o.categorie_id = COALESCE($1::integer, o.categorie_id)
-               AND o.statut = COALESCE($2::status_objet, o.statut)`,
+               AND o.statut = COALESCE($2::statut_objet, o.statut)`,
             [categorie_id ?? null, statut ?? null]
         );
 
