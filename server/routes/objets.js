@@ -58,7 +58,7 @@ routerObjet.get('/:id', async (req, res) => {
 // ============================================================
 // Change le statut d'un objet (statut, prix?)
 // ============================================================
-routerObjet.patch('/:id/status', async (req, res) => {
+routerObjet.patch('/:id/statut', async (req, res) => {
     try {
         const { statut, prix } = req.body; // req.body	Données envoyées dans le corps de la requête (POST/PUT)
         const { id } = req.params;
@@ -70,7 +70,7 @@ routerObjet.patch('/:id/status', async (req, res) => {
 
         const { rows } = await pool.query(
             `UPDATE objet 
-             SET statut = $1::status_objet,
+             SET statut = $1::statut_objet,
                  prix = COALESCE($2, prix),
                  date_mise_rayon = CASE WHEN $1 = 'en_rayon' THEN CURRENT_DATE ELSE date_mise_rayon END
              WHERE id = $3
