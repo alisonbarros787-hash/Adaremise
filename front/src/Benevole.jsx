@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API_URL = "http://localhost:3000/api/personnes"
+const API_URL = "http://localhost:3000/api/personnes/benevoles"
 
 // creation de l'identification de la bénévole, le changement de statut 
 
@@ -27,8 +27,7 @@ function Benevole() {
     <div>
       {benevole.map(b => (
         <div>
-            {b.nom}
-            {b.prenom}
+            {b.nom} {b.prenom}
         </div>
       ))}
     </div> 
