@@ -31,3 +31,4 @@ routerPersonne.post('/', async (req, res) => {
 });
 
 export default routerPersonne
+
