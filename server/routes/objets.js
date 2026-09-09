@@ -19,11 +19,11 @@ routerObjet.get('/', async (req, res) => {
                AND o.statut = COALESCE($2::status_objet, o.statut)`,
             [categorie_id ?? null, statut ?? null]
         );
-
         res.status(200).json(result.rows);
+        
     } catch (err) {
         console.error(err);
-        res.status(500).json({ erreur: 'Erreur, aucun objet trouvé.' });
+        res.status(404).json({ erreur: 'Erreur, aucun objet trouvé.' });
     }
 });
 
@@ -58,7 +58,7 @@ routerObjet.get('/:id', async (req, res) => {
 // ============================================================
 // Change le statut d'un objet (statut, prix?)
 // ============================================================
-routerObjet.patch('/:id/status', async (req, res) => {
+routerObjet.patch('/:id/statut', async (req, res) => {
     try {
         const { statut, prix } = req.body; // req.body	Données envoyées dans le corps de la requête (POST/PUT)
         const { id } = req.params;
@@ -70,7 +70,7 @@ routerObjet.patch('/:id/status', async (req, res) => {
 
         const { rows } = await pool.query(
             `UPDATE objet 
-             SET statut = $1::status_objet,
+             SET statut = $1::statut_objet,
                  prix = COALESCE($2, prix),
                  date_mise_rayon = CASE WHEN $1 = 'en_rayon' THEN CURRENT_DATE ELSE date_mise_rayon END
              WHERE id = $3

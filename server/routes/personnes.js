@@ -3,20 +3,42 @@ import { pool } from "../db.js";
 
 const routerPersonne = express.Router();
 
+routerPersonne.get("/benevoles", async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT id, nom, prenom, telephone
+             FROM benevole
+             ORDER BY nom ASC`
+        );
 
-// ROUTE POST : Crée une donatrice (nom, prenom, telephone?, adherente?):
-routerPersonne.post('/', async (req, res) => {
-    const {id, nom, prenom, telephone, adherente} = req.body
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                message: "Aucune bénévole trouvée"
+            });
+        }
 
-    if(!id || !nom || !prenom || !telephone || !adherente){
-        return res.status(400).json({error: 'Champs obligatoires manquants !'})
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: "Erreur recuperation"
+        });
     }
-    const { rows } = await pool.query(
-        `INSERT INTO personne (id, nom, prenom, telephone, adherente)VALUES ($1, $2, $3, $4, $5)
-        RETURNING *`,
-        [id, nom, prenom, telephone, BOOLEAN(adherente)]
-    )
-    res.status(201).json(rows[0])
 });
 
-export default routerPersonne
+// ROUTE POST : Crée une donatrice (nom, prenom, telephone?, adherente?):
+routerPersonne.post("/", async (req, res) => {
+  const { nom, prenom, telephone, adherente } = req.body;
+
+  if (!nom || !prenom || !telephone || !adherente) {
+    return res.status(400).json({ error: "Champs obligatoires manquants !" });
+  }
+  const { rows } = await pool.query(
+    `INSERT INTO personne (nom, prenom, telephone, adherente)VALUES ($1, $2, $3, $4)
+        RETURNING *`,
+    [nom, prenom, telephone, (adherente)],
+  );
+  res.status(201).json(rows[0]);
+});
+
+export default routerPersonne;
