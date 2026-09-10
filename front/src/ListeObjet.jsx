@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 
 const API_URL = "http://localhost:3000/api/objets"
 
@@ -22,16 +23,17 @@ function ListeObjets() {
     recupObjets()
 }, [])
 
- return (
+return (
     <div>
       {objet.map(o => (
-        <div key= {`${o.objet_libelle}--${o.categorie_libelle}`}>
-                <p>{o.objet_libelle}</p>
-                <p>{o.categorie_libelle}</p>
+        <div key={o.objet_id}>
+            <p>
+              <Link to={`/objets/${o.objet_id}`}>{o.objet_libelle}</Link>
+            </p>
+            <p>{o.categorie_libelle}</p>
         </div>
       ))}
-    </div> 
- 
+    </div>
 )
 }
 
