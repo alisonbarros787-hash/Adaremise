@@ -1,184 +1,219 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+/* FOND GÉNÉRAL LUMINEUX */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f0f3ff;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.15) 0px, transparent 50%),
+    radial-gradient(rgba(99, 102, 241, 0.12) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 20px 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 2rem 1rem;
 }
 
-#center {
+/* CARTE PRINCIPALE */
+.main-card {
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2.5rem;
+  border: 1px solid rgba(199, 210, 254, 0.6);
+  box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.12);
+}
+
+/* EN-TÊTE */
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+  border: 1.5px solid #a5b4fc;
+  padding: 0.65rem 2rem;
+  border-radius: 99px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.12);
+}
+
+.brand-badge h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3730a3; /* Couleur indigo solide et lisible */
+  margin: 0;
+  padding: 0;
+}
+
+.subtitle {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* NAVIGATION ONGLETS */
+.tab-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: #eef2ff;
+  padding: 0.45rem;
+  border-radius: 16px;
+  border: 1px solid #c7d2fe;
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4338ca;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab-btn:hover {
+  color: #1e1b4b;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+/* SECTIONS & TITRES */
+.section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3730a3;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+/* NUAGE DE BÉNÉVOLES (benevole-cloud) */
+.benevole-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.benevole-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #3b0764;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 12px;
+  border: 1.5px solid #e9d5ff;
+  box-shadow: 0 2px 6px rgba(126, 34, 206, 0.04);
+  transition: all 0.2s ease;
+}
+
+.benevole-item:hover {
+  border-color: #a855f7;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(168, 85, 247, 0.15);
+}
+
+/* GRILLE / CARTE (Bénévoles & Objets) */
+.card-grid, .objets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card, .objet-card {
+  background: #ffffff;
+  border: 1.5px solid #e9d5ff;
+  border-radius: 14px;
+  padding: 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+.card:hover, .objet-card:hover {
+  transform: translateY(-2px);
+  border-color: #9333ea;
+  box-shadow: 0 8px 18px rgba(147, 51, 234, 0.12);
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.card-title, .objet-nom {
+  font-weight: 700;
+  color: #3b0764;
+  font-size: 0.95rem;
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+.badge, .objet-cat {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4f46e5;
+  background-color: #eef2ff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  border: 1px solid #c7d2fe;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.objet-benevole {
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: #64748b;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #f3e8ff;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+/* FICHE OBJET DÉTAILLÉE */
+.fiche-objet-card {
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 14px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.btn-retour {
+  background: #f3e8ff;
+  color: #6b21a8;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1.25rem;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.fiche-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  background: #faf5ff;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #f3e8ff;
 }
