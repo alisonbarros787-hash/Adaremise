@@ -9,8 +9,8 @@ import routerStat from './routes/stats.js'
 // Importe les "routers" définis dans chaque fichier séparé.
 // Chaque fichier regroupe les routes liées à une seule ressource, ça garde le code organisé.
 
-const app = express()
- 
+const app = express();
+
 app.use(cors())
 // Importe le middleware CORS, Il sert à autoriser un navigateur (ex: React sur localhost:5173)
 // fait des requêtes vers l'API, tourne sur (localhost:3000).
