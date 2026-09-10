@@ -25,8 +25,9 @@ function ListeObjets() {
  return (
     <div>
       {objet.map(o => (
-        <div>
-            {o.objet_libelle} {o.categorie_libelle}
+        <div key= {`${o.objet_libelle}--${o.categorie_libelle}`}>
+                <p>{o.objet_libelle}</p>
+                <p>{o.categorie_libelle}</p>
         </div>
       ))}
     </div> 
