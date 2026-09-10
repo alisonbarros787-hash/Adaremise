@@ -1,18 +1,22 @@
 ### Variable réutilisable pour l'URL de base
-@baseUrl = http://localhost:3000
+<<<<<<< HEAD
+@baseUrl = http://localhost:3000/api 
+=======
+@baseUrl = http://localhost:3000/api
+>>>>>>> 1306be7dd4a991e5d26747bfd7ae6ce91d948a3d
 #* {{baseUrl}} est une variable définie en haut de du fichier .http, permet en cas de changement de port de changer uniquement cette variable 
 
 
 ### GET — Récupérer un objet existant (cas normal, doit réussir)
-GET {{baseUrl}}/objet/1
+GET {{baseUrl}}/objets/1
 
 ### ==========================================================
 ### GET — Cas d'erreur : identifiant inexistant
-GET {{baseUrl}}/objet/99999
+GET {{baseUrl}}/objets/99999
 
 ### =========================================================
 ### PATCH — Modifier le statut d'un objet (cas normal)
-PATCH {{baseUrl}}/objet/1/status
+PATCH {{baseUrl}}/objets/1/statut
 Content-Type: application/json
 
 {
@@ -22,7 +26,7 @@ Content-Type: application/json
 
 
 ### PATCH — Cas d'erreur : valeur d'enum invalide
-PATCH {{baseUrl}}/objet/1/status
+PATCH {{baseUrl}}/objets/1/status
 Content-Type: application/json
 
 {

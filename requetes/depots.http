@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3000/api
 
 ### GET — Un dépôt existant avec sa donatrice et ses objets
 GET {{baseUrl}}/depot/1
