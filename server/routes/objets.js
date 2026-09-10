@@ -12,13 +12,16 @@ routerObjet.get('/', async (req, res) => {
          const { categorie_id, statut } = req.query; // req.query = Paramètres après ? dans l'URL	(ex : ?id=5)
 
         const result = await pool.query(
-            `SELECT o.*, c.libelle 
+            `SELECT o.libelle AS objet_libelle, c.libelle AS categorie_libelle
              FROM objet o 
              JOIN categorie c ON o.categorie_id = c.id
              WHERE o.categorie_id = COALESCE($1::integer, o.categorie_id)
-               AND o.statut = COALESCE($2::status_objet, o.statut)`,
+               AND o.statut = COALESCE($2::statut_objet, o.statut)`,
             [categorie_id ?? null, statut ?? null]
         );
+        // categorie_id ?? null → si categorie_id existe (a été fourni dans l'URL via req.query), on garde sa valeur ; sinon (il est undefined), on le remplace explicitement par null.
+        // Pareil pour statut ?? null.
+        // résumé : ce tableau garantit que si le paramètre n'est pas fourni dans l'URL, on envoie proprement null à la requête SQL plutôt qu'un undefined qui ferait planter la requête.
 
         res.status(200).json(result.rows);
     } catch (err) {
