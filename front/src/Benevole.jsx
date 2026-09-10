@@ -33,7 +33,6 @@ function Benevole() {
     </div> 
  
 )
-
 }
 
 export default Benevole;

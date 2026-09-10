@@ -18,11 +18,10 @@ routerDepot.get('/:id', async (req, res) => {
              WHERE d.id = $1 AND d.type = 'boutique'`,
             [id]
         );
-
         if (depotInfo.rows.length === 0) {
             return res.status(404).json({ erreur: 'Aucun dépôt correspondant.' });
         }
-
+        
         res.status(200).json(depotInfo.rows);
     } catch (erreur) {
         console.error(erreur);
