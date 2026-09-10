@@ -16,11 +16,10 @@ function Benevole() {
         naviger('/')
     
         return (
-            <select>
-               <option><Link to="/objets">Inventaire</Link></option> 
-                <option><Link to="/depots">Dépot</Link></option> 
-                <option><Link to="/stats">Statistique</Link></option> 
-            </select>
+            <section> <Link to="/objets">Inventaire</Link>
+                <Link to="/depots">Dépot</Link>
+                <Link to="/stats">Statistique</Link>
+            </section>
         )
     }
 
