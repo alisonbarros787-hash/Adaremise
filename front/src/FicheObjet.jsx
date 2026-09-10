@@ -1,34 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
-function FicheObjet({ objetId, onRetour }) {
-  const [objet, setObjet] = useState(null);
+function FicheObjet() {
+    // useParams() lit l'id présent dans l'URL (ex: /objets/5 -> id = "5")
+    const { id } = useParams()
 
-  useEffect(() => {
-    const fetchObjetDetails = async () => {
-      try {
-        const reponse = await fetch(`http://localhost:3000/api/objets`);
-        const data = await reponse.json();
-        setObjet(data);
-      } catch (error) {
-        console.error("Erreur chargement fiche objet :", error);
-      }
-    };
+    // useNavigate() est appelé ici, à l'intérieur du composant
+    const navigate = useNavigate()
 
-    if (objetId) fetchObjetDetails();
-  }, [objetId]);
+    const [objet, setObjet] = useState(null)
 
-  if (!objet) return <div>Chargement de la fiche...</div>;
+    useEffect(() => {
+        const fetchObjetDetails = async () => {
+            try {
+                // Appel de la route qui renvoie UN SEUL objet, celui correspondant à id
+                const reponse = await fetch(`http://localhost:3000/api/objets/${id}`)
+                const data = await reponse.json()
+                setObjet(data)
+            } catch (error) {
+                console.error("Erreur chargement fiche objet :", error)
+            }
+        }
 
-  return (
-    <div className="fiche-container">
-      <button className="btn-retour" onClick={onRetour}>← Retour</button>
-      <h2>{objet.objet_libelle || objet.libelle}</h2>
-      {/* Affichage des champs de la BDD */}
-      <p>Poids : {objet.poids_kg} kg</p>
-      <p>Statut : {objet.statut}</p>
-      <p>Prix : {objet.prix} €</p>
-    </div>
-  );
+        if (id) fetchObjetDetails()
+    }, [id])
+
+    if (!objet) return <div>Chargement de la fiche...</div>
+
+    return (
+        <div className="fiche-container">
+            {/* Un seul gestionnaire de clic : navigate remplace onRetour */}
+            <button className="btn-retour" onClick={() => navigate('/objets')}>
+                ← Retour
+            </button>
+            <h2>{objet.objet_libelle || objet.libelle}</h2>
+            <p>Poids : {objet.poids_kg} kg</p>
+            <p>Statut : {objet.statut}</p>
+            <p>Prix : {objet.prix} €</p>
+        </div>
+    )
 }
 
-export default FicheObjet;
+export default FicheObjet

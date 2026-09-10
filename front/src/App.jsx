@@ -1,19 +1,22 @@
-import { useState } from 'react'
 import './App.css'
 import Benevole from './Benevole.jsx'
+import FicheObjet from './FicheObjet.jsx'
 import ListeObjets from './ListeObjet.jsx'
+import { Routes, Route } from 'react-router-dom'
 
 
 function App() {
  
 
   return (
-    <>
-    <h1>Titre</h1>
-     <Benevole/>
-     <ListeObjets />
-   </>
-      )
+    <Routes>
+       {/* Quand l'URL est '/', le composant Benevole s'affiche le omposant Benevole.jsx */}
+      <Route path="/" element={<Benevole/>}/>
+      <Route path="/objets" element={<ListeObjets/>}/>
+      <Route path="/objets/:id" element={<FicheObjet/>}/>
+    </Routes>
+  )
 }
 
 export default App
+ 
