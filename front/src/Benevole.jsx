@@ -16,7 +16,8 @@ function Benevole() {
         naviger('/')
     
         return (
-            <section> <Link to="/objets">Inventaire</Link>
+            <section>
+                <Link to="/objets">Inventaire</Link>
                 <Link to="/depots">Dépot</Link>
                 <Link to="/stats">Statistique</Link>
             </section>

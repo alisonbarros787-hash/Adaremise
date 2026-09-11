@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router"
 
-const API_URL = "http://localhost:3000/api/objet";
+
 
 function Depot() {
   const [formulaire, setFormulaire] = useState({
@@ -21,7 +22,9 @@ function Depot() {
   };
 
   return (
+    
     <form>
+      <Link to="/">Accuiel</Link>
       <input
         type="text"
         name="libelle"
