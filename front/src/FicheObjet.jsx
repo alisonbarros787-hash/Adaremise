@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 
 function FicheObjet() {
     // useParams() lit l'id présent dans l'URL (ex: /objets/5 -> id = "5")
@@ -30,6 +30,7 @@ function FicheObjet() {
     return (
         <div className="fiche-container">
             {/* Un seul gestionnaire de clic : navigate remplace onRetour */}
+            <Link to="/objets">X</Link>
             <button className="btn-retour" onClick={() => navigate('/objets')}>
                 ← Retour
             </button>

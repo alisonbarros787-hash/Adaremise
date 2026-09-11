@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_URL = "http://localhost:3000/api/objet";
+
 
 function Depot() {
   const [formulaire, setFormulaire] = useState({
