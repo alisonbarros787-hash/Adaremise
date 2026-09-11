@@ -18,12 +18,9 @@ function App() {
       <Route path="/" element={<Benevole/>}/>
       <Route path="/objets" element={<ListeObjets/>}/>
       <Route path="/objets/:id" element={<FicheObjet/>}/>
-<<<<<<< HEAD
       <Route path="/depots" element={<Depot/>}/>
       <Route path="/depots/:id" element={<UserBack/>}/>
-=======
       <Route path="/stats" element={<Stats/>}/>
->>>>>>> stats
     </Routes>
   )
 }
