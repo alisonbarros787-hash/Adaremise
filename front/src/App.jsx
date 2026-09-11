@@ -6,13 +6,15 @@ import UserBack from './UserHistorique.jsx'
 import Depot from './Depot.jsx'
 import { Routes, Route } from 'react-router-dom'
 import Stats from './Stat.jsx'
+import Nav from './Nav.jsx'
 
 
 function App() {
  
 
   return (
-    
+    <>
+    <Nav />
     <Routes>
        {/* Quand l'URL est '/', le composant Benevole s'affiche le omposant Benevole.jsx */}
       <Route path="/" element={<Benevole/>}/>
@@ -22,6 +24,7 @@ function App() {
       <Route path="/depots/:id" element={<UserBack/>}/>
       <Route path="/stats" element={<Stats/>}/>
     </Routes>
+    </>
   )
 }
 
