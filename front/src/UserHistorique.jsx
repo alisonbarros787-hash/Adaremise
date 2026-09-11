@@ -32,13 +32,13 @@ function UserBack() {
     return (
         <div className="historik">
           {/* <button onClick={() => navigate('/')}>X</button> */}
-          <Link to="/depots">X</Link>
-            
+          <Link to="/" className="btn-retour">← Retour</Link>
              <p>Objet : {historique.objet}</p>
              <p>Date de dépot : {historique.date_depot}</p>
              <p>Status de l'objet : {historique.statut}</p>
              <p>Catégorie : {historique.categorie}</p>
              <p>Poids : {historique.poids}</p>
+             <p>Nom Bénévole : {historique.nom}</p>
         </div>
       
     )

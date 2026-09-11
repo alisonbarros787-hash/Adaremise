@@ -30,7 +30,6 @@ function FicheObjet() {
     return (
         <div className="fiche-container">
             {/* Un seul gestionnaire de clic : navigate remplace onRetour */}
-            <Link to="/objets">X</Link>
             <button className="btn-retour" onClick={() => navigate('/objets')}>
                 ← Retour
             </button>
@@ -38,6 +37,7 @@ function FicheObjet() {
             <p>Poids : {objet.poids_kg} kg</p>
             <p>Statut : {objet.statut}</p>
             <p>Prix : {objet.prix} €</p>
+             <p>Déposé par : {objet.nom}</p>
         </div>
     )
 }
