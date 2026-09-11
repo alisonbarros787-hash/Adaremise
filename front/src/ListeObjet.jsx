@@ -14,7 +14,7 @@ function ListeObjets() {
         try{
         const reponse = await fetch(API_URL)
         const result = await reponse.json()
-        setobjet(result)
+        setobjet(result) 
         }catch (error){
             console.log("❌ Aie, Aie erreur", error.message)
     
@@ -24,17 +24,18 @@ function ListeObjets() {
 }, [])
 
 return (
-    <div>
-      {objet.map(o => (
-        <div key={o.objet_id}>
-            <p>
-              <Link to={`/objets/${o.objet_id}`}>{o.objet_libelle}</Link>
-            </p>
-            <p>{o.categorie_libelle}</p>
+        <div>
+            <h2>Inventaire des objets</h2>
+            <div className="card-grid">
+                {objet.map(o => (
+                    <div key={o.objet_id} className="card">
+                    <p><Link to={`/objets/${o.objet_id}`}>{o.objet_libelle}</Link></p>
+                        <p>{o.categorie_libelle}</p>
+                    </div>
+                ))}
+            </div>
         </div>
-      ))}
-    </div>
-)
+    );
 }
 
 export default ListeObjets;
