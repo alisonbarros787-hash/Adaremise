@@ -24,7 +24,7 @@ function Depot() {
   return (
     
     <form>
-      <Link to="/">Accuiel</Link>
+      <Link to="/">Accueil</Link>
       <input
         type="text"
         name="libelle"
