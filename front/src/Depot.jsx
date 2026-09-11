@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router"
 
 
 
@@ -21,7 +22,9 @@ function Depot() {
   };
 
   return (
+    
     <form>
+      <Link to="/">Accuiel</Link>
       <input
         type="text"
         name="libelle"
