@@ -1,18 +1,31 @@
-import { useState } from "react";
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-
+const API_URL = "http://localhost:3000/api/personnes";
+const DEPOT_URL = "http://localhost:3000/api/depots";
 
 function Depot() {
+  const navigate = useNavigate();
+
+  const [personnes, setPersonnes] = useState([]);
   const [formulaire, setFormulaire] = useState({
     personne_id: "",
     date_depot: "",
     type: "",
-    libelle: "",
-    poids_kg: "",
-    etat_arrivee: "",
-    categorie_id: "",
   });
+
+  useEffect(() => {
+    const recupPersonnes = async () => {
+      try {
+        const reponse = await fetch(API_URL);
+        const result = await reponse.json();
+        setPersonnes(result);
+      } catch (error) {
+        console.log("❌ Erreur chargement personnes", error.message);
+      }
+    };
+    recupPersonnes();
+  }, []);
 
   const formulaireRempli = (event) => {
     setFormulaire({
@@ -21,47 +34,66 @@ function Depot() {
     });
   };
 
+  const envoyerFormulaire = async (event) => {
+    event.preventDefault();
+
+    try {
+      const reponse = await fetch(DEPOT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formulaire),
+      });
+
+      if (!reponse.ok) {
+        const err = await reponse.json();
+        console.log("Erreur:", err);
+        return;
+      }
+
+      const nouveauDepot = await reponse.json();
+      navigate(`/depots/${nouveauDepot.id}`);
+    } catch (error) {
+      console.log("Oups, erreur formulaire", error.message);
+    }
+  };
+
   return (
-    
-    <form>
+    <div>
       <Link to="/">Accueil</Link>
-      <input
-        type="text"
-        name="libelle"
-        value={formulaire.libelle}
-        onChange={formulaireRempli}
-      />
-      <br></br>
-      <input
-        type="number"
-        name="poids_kg"
-        value={formulaire.poids_kg}
-        onChange={formulaireRempli}
-      />
-      <br></br>
-      <select
-        name="categorie_id"
-        value={formulaire.categorie_id}
-        onChange={formulaireRempli}
-      >
-        <option value="">Choisi une categorie</option>
-        <option value="1">Mobilier</option>
-         <option value="2">Électroménager</option>
-          <option value="3">Vaisselle</option>
-           <option value="4">Textile</option>
-           <option value="5">Livres</option>
-           <option value="6">Jouets</option>
-           <option value="7">Outillage</option>
-           <option value="8">Décoration</option>
-      </select>
-      <br></br>
-      <input
-        type="date"
-        name="date_depot"
-        value={formulaire.date_depot}
-        onChange={formulaireRempli}
-      />
-    </form>
+
+      <form onSubmit={envoyerFormulaire}>
+        <select
+          name="personne_id"
+          value={formulaire.personne_id}
+          onChange={formulaireRempli}
+        >
+          <option value="">Choisir une donatrice</option>
+          {personnes.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.nom} {p.prenom}
+            </option>
+          ))}
+        </select>
+        <br />
+
+        <input
+          type="date"
+          name="date_depot"
+          value={formulaire.date_depot}
+          onChange={formulaireRempli}
+        />
+        <br />
+
+        <select name="type" value={formulaire.type} onChange={formulaireRempli}>
+          <option value="">Choisir un type</option>
+          <option value="boutique">Boutique</option>
+          <option value="domicile">Domicile</option>
+        </select>
+        <br />
+
+        <button type="submit">Créer le dépôt</button>
+      </form>
+    </div>
   );
 }
 
