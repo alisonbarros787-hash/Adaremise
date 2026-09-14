@@ -445,3 +445,31 @@ button:hover, .btn-retour:hover {
   font-weight: 800;
   color: var(--primary);
 }
+/* ============================================================
+   FILTRE - Menu filtre
+   ============================================================ */
+
+/* Style et espacement des filtres <select> */
+select {
+  margin-right: 16px; /* Décolle les boutons horizontalement */
+  margin-bottom: 12px; /* Marge de sécurité si ça passe à la ligne */
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--primary, #3D4C5A);
+  border: 1px solid var(--secondary, #D9CEB9);
+  border-radius: var(--radius, 8px);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Effet au survol et au clic */
+select:hover {
+  border-color: var(--primary, #3D4C5A);
+}
+
+select:focus {
+  border-color: var(--primary, #3D4C5A);
+  box-shadow: 0 0 0 2px rgba(61, 76, 90, 0.15);
+}
