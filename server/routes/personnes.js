@@ -30,5 +30,17 @@ routerPersonne.post('/', async (req, res) => {
     res.status(201).json(rows[0])
 });
 
+routerPersonne.get('/', async (req, res) => {
+    try {
+        const { rows } = await pool.query(
+            `SELECT * FROM personne ORDER BY nom ASC;`
+        );
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des personnes !' });
+    }
+});
+
 export default routerPersonne
 
