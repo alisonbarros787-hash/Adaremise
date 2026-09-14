@@ -37,6 +37,8 @@ function Depot() {
   const envoyerFormulaire = async (event) => {
     event.preventDefault();
 
+    console.log("Test");
+    
     try {
       const reponse = await fetch(DEPOT_URL, {
         method: "POST",

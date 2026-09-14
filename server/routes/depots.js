@@ -14,8 +14,8 @@ routerDepot.get('/:id', async (req, res) => {
             `SELECT d.type, p.*, o.* 
              FROM depot d 
              JOIN personne p ON d.personne_id = p.id 
-             JOIN objet o ON o.depot_id = d.id 
-             WHERE d.id = $1 AND d.type = 'boutique'`,
+             LEFT JOIN objet o ON o.depot_id = d.id 
+             WHERE d.id = $1`,
             [id]
         );
         if (depotInfo.rows.length === 0) {
