@@ -29,20 +29,43 @@ function UserBack() {
         detailUser()
     }, [id])
 
+   const nomObjet = historique.objet || historique.libelle || historique.objet_libelle || "Objet sans nom";
+    const dateDepot = historique.date_depot ? new Date(historique.date_depot).toLocaleDateString("fr-FR") : "N/C";
+    const statut = historique.statut || historique.statut_objet || "N/C";
+    const categorie = historique.categorie || historique.categorie_libelle || "Général";
+    const poids = historique.poids ?? historique.poids_kg ?? 0;
+
     return (
-        <div className="historik">
-          {/* <button onClick={() => navigate('/')}>X</button> */}
-          <Link to="/" className="btn-retour">← Retour</Link>
-             <p>Objet : {historique.objet}</p>
-             <p>Date de dépot : {historique.date_depot}</p>
-             <p>Status de l'objet : {historique.statut}</p>
-             <p>Catégorie : {historique.categorie}</p>
-             <p>Poids : {historique.poids}</p>
-             <p>Nom Bénévole : {historique.nom}</p>
+        <div className="card">
+            <Link to="/depots" className="btn-back">← Retour</Link>
+            
+            {/* 1. Titre direct au lieu d'une ligne "Objet :" */}
+            <h2>{nomObjet}</h2>
+
+            {/* 2. Grille d'informations directement visibles */}
+            <div className="card-grid">
+                <div>
+                    <small>Catégorie</small>
+                    <p><strong>{categorie}</strong></p>
+                </div>
+
+                <div>
+                    <small>Statut</small>
+                    <p><strong>{statut}</strong></p>
+                </div>
+
+                <div>
+                    <small>Poids</small>
+                    <p><strong>{poids} kg</strong></p>
+                </div>
+
+                <div>
+                    <small>Date de dépôt</small>
+                    <p><strong>{dateDepot}</strong></p>
+                </div>
+            </div>
         </div>
-      
-    )
+    );
+}
 
- }
-
-export default UserBack
+export default UserBack;
