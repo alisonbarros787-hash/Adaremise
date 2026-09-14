@@ -61,7 +61,6 @@ function Depot() {
 
   return (
     <div>
-      <Link to="/">Accueil</Link>
 
       <form onSubmit={envoyerFormulaire}>
         <select
@@ -83,7 +82,7 @@ function Depot() {
           name="date_depot"
           value={formulaire.date_depot}
           onChange={formulaireRempli}
-        />
+          />
         <br />
 
         <select name="type" value={formulaire.type} onChange={formulaireRempli}>
