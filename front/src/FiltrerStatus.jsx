@@ -1,4 +1,4 @@
-function FilterStatus({ statusFilter, selectStatus, onChangeStatus }) {
+function FiltrerStatus({ statusFilter, selectStatus, onChangeStatus }) {
     return (
         <select value={selectStatus} onChange={(s) => onChangeStatus(s.target.value)}>
           {statusFilter.map((s) => (
@@ -11,4 +11,4 @@ function FilterStatus({ statusFilter, selectStatus, onChangeStatus }) {
 }
 
 
-export default FilterStatus
+export default FiltrerStatus

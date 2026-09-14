@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom'
 import FilterCategorie from './Filters.jsx'
-import FilterStatus from './FiltreStatus.jsx'; // import du composant enfant
+import FiltrerStatus from './FiltrerStatus.jsx'; // import du composant enfant
 
 
 const API_URL = "http://localhost:3000/api/objets"
@@ -63,7 +63,7 @@ const [selectStatus, setSelectStatus] = useState("all")
                 onCategorieChange={setSelecteCategorie}
             />
              {/*👉 ICI,  <FilterStatus ... /> */}
-             <FilterStatus
+             <FiltrerStatus
               statusFilter={stat}
               selectStatus={selectStatus}
               onChangeStatus={setSelectStatus}
