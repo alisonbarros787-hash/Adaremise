@@ -14,6 +14,9 @@ function Depot() {
     type: "",
   });
 
+  // Pour envoyer un message si le champ est vide
+  const [messageRemplir, setMessageRemplir] = useState("");
+
   useEffect(() => {
     const recupPersonnes = async () => {
       try {
@@ -37,8 +40,6 @@ function Depot() {
   const envoyerFormulaire = async (event) => {
     event.preventDefault();
 
-    console.log("Test");
-    
     try {
       const reponse = await fetch(DEPOT_URL, {
         method: "POST",
@@ -47,8 +48,7 @@ function Depot() {
       });
 
       if (!reponse.ok) {
-        const err = await reponse.json();
-        console.log("Erreur:", err);
+        setMessageRemplir(("Oups, tous les champs sont obligatoires"));
         return;
       }
 
@@ -61,7 +61,6 @@ function Depot() {
 
   return (
     <div>
-
       <form onSubmit={envoyerFormulaire}>
         <select
           name="personne_id"
@@ -82,7 +81,7 @@ function Depot() {
           name="date_depot"
           value={formulaire.date_depot}
           onChange={formulaireRempli}
-          />
+        />
         <br />
 
         <select name="type" value={formulaire.type} onChange={formulaireRempli}>
@@ -91,6 +90,7 @@ function Depot() {
           <option value="domicile">Domicile</option>
         </select>
         <br />
+        {messageRemplir && <p className="message-erreur">{messageRemplir}</p>}
 
         <button type="submit">Créer le dépôt</button>
       </form>
