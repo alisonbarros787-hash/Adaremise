@@ -21,7 +21,8 @@ routerObjet.get('/', async (req, res) => {
      FROM objet o
      JOIN categorie c ON o.categorie_id = c.id
      WHERE o.categorie_id = COALESCE($1::integer, o.categorie_id)
-       AND o.statut = COALESCE($2::statut_objet, o.statut)`,
+       AND o.statut = COALESCE($2::statut_objet, o.statut)
+       ORDER BY o.libelle ASC`,
     [categorie_id ?? null, statut ?? null]
 );
 
