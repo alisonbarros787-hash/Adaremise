@@ -35,6 +35,11 @@ routerDepot.get('/:id', async (req, res) => {
 routerDepot.post('/', async (req, res) => {
     try {
         const { personne_id, date_depot, type } = req.body;
+        if (!personne_id || !date_depot || !type) {
+            return res.status(400).json({
+                error: `Tous les champs sont obligatoires`
+            });
+        }
 
         // Vérification de la liste blanche AVANT l'insertion
         const TYPES = ['boutique', 'domicile'];
