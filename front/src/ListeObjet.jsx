@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom'
+https://github.com/alisonbarros787-hash/Adaremise/pull/18/conflict?name=front%252Fsrc%252FListeObjet.jsx&ancestor_oid=5ed5470f66d2580625e9a065f1ba7773186a1cde&base_oid=bd6f0ca7ff633b86c90f72613b18a3c7301e5a8c&head_oid=463d869c1bbac3958ad7ffe6699da43e15142b57<<<<<<< FiltreStat
 import FilterCategorie from './Filters.jsx'
 import FilterStatus from './FiltreStatus.jsx'; // import du composant enfant
 
@@ -18,13 +19,11 @@ function ListeObjets() {
 
 const [selectStatus, setSelectStatus] = useState("all")
 
-
     useEffect(() => {
         const recupObjets = async () => {
             try {
                 const reponse = await fetch(API_URL)
                 const result = await reponse.json()
-                console.log(result)
                 setobjet(result)
             } catch (error) {
                 console.log("❌ Aie, Aie erreur", error.message)
@@ -32,9 +31,6 @@ const [selectStatus, setSelectStatus] = useState("all")
         }
         recupObjets()
     }, [])
-
-
-
 
     // Calcule la liste des catégories disponibles à partir des objets reçus
     // useMemo évite de refaire ce calcul à chaque re-render, seulement quand "objet" change
@@ -59,7 +55,6 @@ const [selectStatus, setSelectStatus] = useState("all")
     return (
         <div>
             <h2>Inventaire des objets</h2>
-
 
             {/* Composant enfant distinct : il reçoit juste les catégories
                 et une fonction pour signaler un changement de sélection */}

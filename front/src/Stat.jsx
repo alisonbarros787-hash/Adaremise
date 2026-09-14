@@ -25,8 +25,6 @@ function TableauDeBord() {
         const reponse = await fetch(API_STATS_URL);
 
         // Vérification du statut HTTP AVANT de traiter la réponse.
-        // Sans ce contrôle, une erreur 500 (qui renvoie { error: "..." })
-        // serait quand même stockée dans "stats" comme si c'était des données valides.
         if (!reponse.ok) {
           throw new Error(`Erreur ${reponse.status} lors de la récupération des stats`);
         }
@@ -49,6 +47,11 @@ function TableauDeBord() {
     recupStats(); // Exécution de la fonction asynchrone
   }, []); // Le tableau de dépendances vide [] garantit que la requête ne s'exécute qu'une seule fois
 
+  // Extraction sécurisée des métriques pour gérer aussi bien le camelCase que le snake_case SQL
+  const poidsTotal = stats.poidsTotalRecu ?? stats.poids_total ?? stats.poids ?? 0;
+  const nbEnRayon = stats.nbObjetsEnRayon ?? stats.en_rayon ?? stats.total_rayon ?? 0;
+  const listeStatuts = Array.isArray(stats.objetsParStatut) ? stats.objetsParStatut : [];
+
   return (
     <div className="section dashboard-section">
       <h2>Tableau de bord</h2>
@@ -70,7 +73,7 @@ function TableauDeBord() {
               <div className="stat-info">
                 <p className="stat-label">Poids total reçu</p>
                 {/* Affichage dynamique du poids récupéré de l'API */}
-                <p className="stat-value">{stats.poidsTotalRecu} kg</p>
+                <p className="stat-value">{poidsTotal} kg</p>
               </div>
             </div>
 
@@ -80,7 +83,7 @@ function TableauDeBord() {
               <div className="stat-info">
                 <p className="stat-label">Objets en rayon</p>
                 {/* Affichage dynamique du nombre d'objets */}
-                <p className="stat-value">{stats.nbObjetsEnRayon}</p>
+                <p className="stat-value">{nbEnRayon}</p>
               </div>
             </div>
           </div>
@@ -90,13 +93,16 @@ function TableauDeBord() {
             <h3>Nombre d'objets par statut</h3>
             <div className="statut-grid">
               {/* Vérification que le tableau objetsParStatut existe et contient des données */}
-              {stats.objetsParStatut && stats.objetsParStatut.length > 0 ? (
+              {listeStatuts.length > 0 ? (
                 // Parcours du tableau avec .map() pour générer une carte par statut
-                // Utilisation de item.statut comme clé (plus stable qu'un index si l'ordre change)
-                stats.objetsParStatut.map((item) => (
-                  <div key={item.statut} className="statut-card">
-                    <span className="statut-name">{item.statut}</span>
-                    <span className="statut-count">{item.count}</span>
+                listeStatuts.map((item, index) => (
+                  <div key={item.statut || index} className="statut-card">
+                    <span className="statut-name">
+                      {(item.statut || "").replace("_", " ")}
+                    </span>
+                    <span className="statut-count">
+                      {item.count ?? item.total ?? 0}
+                    </span>
                   </div>
                 ))
               ) : (

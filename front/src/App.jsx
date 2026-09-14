@@ -7,16 +7,19 @@ import Depot from './Depot.jsx'
 import { Routes, Route } from 'react-router-dom'
 import Stats from './Stat.jsx'
 import Nav from './Nav.jsx'
+import logo from './assets/logo.png';
 
 
 function App() {
- 
 
   return (
-   <div className="app-container">
+    <div className="app-container">
       <header className="app-header">
-        <h1>Association - La remise</h1>
-        <p className="subtitle">Gestion des bénévoles et des objets</p>
+        <img src={logo} alt="Logo La Remise" className="logo-badge" />
+        <div>
+          <h1>Association - La remise</h1>
+          <p className="subtitle">Gestion des bénévoles et des objets</p>
+        </div>
       </header>
 
       <Nav />
