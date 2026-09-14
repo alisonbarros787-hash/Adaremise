@@ -1,16 +1,24 @@
+/* ============================================================
+   VARIABLES DE COULEUR — Palette "Holst"
+   Bleu marine profond + vert sauge + crème
+   ============================================================ */
 :root {
-  --primary: #3D4C5A;
-  --primary-hover: #2B3742;
-  --secondary: #D9CEB9;
-  --bg-page: #ECEBE6;
-  --bg-card: #FFFFFF;
-  --bg-soft: #F7F4EE;
-  --text-main: #2D3748;
-  --text-muted: #64748B;
-  --border-color: #E2E8F0;
-  --radius: 12px;
+  --primary: #1B263B;         /* Bleu marine - boutons, titres, nav active */
+  --primary-hover: #0D1B2A;   /* Bleu marine le plus foncé - survol */
+  --secondary: #778D7A;       /* Vert sauge - bordures, éléments secondaires */
+  --accent: #D4C4A8;          /* Beige doux - badges, accents chauds */
+  --accent-dark: #415A77;     /* Bleu-gris moyen - valeurs chiffrées, contrastes */
+  --bg-page: #F4F1DE;         /* Fond de page crème */
+  --bg-card: #FFFFFF;         /* Fond des cartes/blocs blancs */
+  --bg-soft: #FAF7EC;         /* Fond doux, dérivé clair du beige */
+  --text-main: #0D1B2A;       /* Texte principal, bleu marine très foncé */
+  --text-muted: #6E7C6F;      /* Texte secondaire/discret, dérivé du vert sauge */
+  --radius: 16px;             /* Arrondi utilisé partout pour la cohérence */
 }
 
+/* ============================================================
+   RESET GLOBAL
+   ============================================================ */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -24,36 +32,55 @@ body {
   padding: 20px;
 }
 
+/* ============================================================
+   CONTENEUR PRINCIPAL
+   ============================================================ */
 .app-container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   background: var(--bg-card);
-  padding: 2rem;
+  padding: 2.5rem 3rem;
   border-radius: var(--radius);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 30px rgba(13, 27, 42, 0.1);
 }
 
-/* En-tête */
+/* ============================================================
+   EN-TÊTE — Logo + titre + sous-titre
+   ============================================================ */
 .app-header {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
   margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--bg-soft);
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid var(--accent);
+}
+
+.logo-badge {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+  box-shadow: 0 4px 14px rgba(13, 27, 42, 0.3);
+  flex-shrink: 0;
 }
 
 .app-header h1 {
   color: var(--primary);
-  font-size: 2.2rem;
-  font-weight: 700;
+  font-size: 2rem;
+  font-weight: 800;
 }
 
 .subtitle {
   color: var(--text-muted);
   font-size: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 
-/* Navigation */
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 nav {
   display: flex;
   justify-content: center;
@@ -66,19 +93,29 @@ nav a {
   text-decoration: none;
   color: var(--primary);
   background-color: var(--bg-soft);
-  padding: 10px 18px;
-  border-radius: 20px;
-  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 2px solid transparent;
   transition: all 0.2s ease;
-  border: 1px solid var(--secondary);
 }
 
 nav a:hover {
   background-color: var(--primary);
   color: #ffffff;
+  transform: translateY(-2px);
 }
 
-/* Grilles & Cartes */
+/* Onglet actif : nécessite NavLink (react-router) dans Nav.jsx */
+nav a.active {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   GRILLES & CARTES GÉNÉRIQUES — ListeObjets.jsx
+   ============================================================ */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -90,13 +127,13 @@ nav a:hover {
   background: var(--bg-soft);
   border: 1px solid var(--secondary);
   border-radius: var(--radius);
-  padding: 1rem;
+  padding: 1.2rem;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(61, 76, 90, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(13, 27, 42, 0.12);
 }
 
 .card a {
@@ -105,31 +142,55 @@ nav a:hover {
   text-decoration: none;
 }
 
-/* Nuage de bénévoles */
+/* ============================================================
+   NUAGE DE BÉNÉVOLES — Benevole.jsx
+   Pastilles avec avatar initiale
+   ============================================================ */
 .benevole-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
   margin-top: 1rem;
 }
 
 .benevole-item {
-  background-color: var(--bg-soft);
-  border: 1px solid var(--secondary);
-  color: var(--primary);
-  padding: 10px 16px;
-  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-card);
+  border: 2px solid var(--secondary);
+  color: var(--text-main);
+  padding: 8px 20px 8px 8px;
+  border-radius: 30px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: all 0.2s ease;
 }
 
-.benevole-item:hover {
-  background-color: var(--primary);
+.benevole-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  flex-shrink: 0;
 }
 
-/* Formulaires & Boutons */
+.benevole-item:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(13, 27, 42, 0.15);
+}
+
+/* ============================================================
+   FORMULAIRES & BOUTONS — Depot.jsx notamment
+   ============================================================ */
 form {
   display: flex;
   flex-direction: column;
@@ -157,9 +218,9 @@ button, .btn-retour {
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   display: inline-block;
   transition: background-color 0.2s;
@@ -169,8 +230,10 @@ button:hover, .btn-retour:hover {
   background-color: var(--primary-hover);
 }
 
-/* Fiches & Historique */
-.fiche-container, .historik {
+/* ============================================================
+   FICHE OBJET — FicheObjet.jsx
+   ============================================================ */
+.fiche-container {
   background: var(--bg-soft);
   border: 1px solid var(--secondary);
   padding: 1.5rem;
@@ -179,12 +242,87 @@ button:hover, .btn-retour:hover {
   margin-top: 1rem;
 }
 
-.fiche-container p, .historik p {
+.fiche-container p {
   margin-bottom: 8px;
   font-size: 1.05rem;
 }
 
-/*Stat*/
+/* ============================================================
+   HISTORIQUE / FICHE DÉPÔT — UserHistorique.jsx
+   Version "bandeau coloré"
+   ============================================================ */
+.historik {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-top: 1rem;
+  min-height: 200px;      /* force une hauteur minimale, pour qu'elle ne paraisse pas "coupée" */
+  border: 1px solid var(--secondary);
+}
+
+.historik .btn-retour {
+  margin: 1.5rem 1.5rem 0;
+}
+
+.historik-header {
+  background: linear-gradient(135deg, var(--primary), var(--accent-dark));
+  color: white;
+  padding: 2rem;          /* plus d'espace autour du titre/icône */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.historik-icon {
+  font-size: 2rem;
+}
+
+.historik-header h2 {
+  flex: 1;
+  font-size: 1.4rem;
+}
+
+.historik-badge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.historik-details {
+  padding: 2rem;           /* plus d'espace autour des infos */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.detail-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* ============================================================
+   TABLEAU DE BORD / STATISTIQUES — Stat.jsx
+   ============================================================ */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -200,11 +338,16 @@ button:hover, .btn-retour:hover {
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
 }
 
 .stat-value {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
 }
 
@@ -227,16 +370,21 @@ button:hover, .btn-retour:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: transform 0.2s;
+}
+
+.statut-card:hover {
+  transform: translateY(-3px);
 }
 
 .statut-name {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
   text-transform: capitalize;
 }
 
 .statut-count {
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
 }

@@ -14,8 +14,8 @@ routerDepot.get('/:id', async (req, res) => {
             `SELECT d.type, p.*, o.* 
              FROM depot d 
              JOIN personne p ON d.personne_id = p.id 
-             JOIN objet o ON o.depot_id = d.id 
-             WHERE d.id = $1 AND d.type = 'boutique'`,
+             LEFT JOIN objet o ON o.depot_id = d.id 
+             WHERE d.id = $1`,
             [id]
         );
         if (depotInfo.rows.length === 0) {
@@ -35,6 +35,11 @@ routerDepot.get('/:id', async (req, res) => {
 routerDepot.post('/', async (req, res) => {
     try {
         const { personne_id, date_depot, type } = req.body;
+        if (!personne_id || !date_depot || !type) {
+            return res.status(400).json({
+                error: `Tous les champs sont obligatoires`
+            });
+        }
 
         // Vérification de la liste blanche AVANT l'insertion
         const TYPES = ['boutique', 'domicile'];

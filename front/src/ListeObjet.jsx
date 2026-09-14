@@ -18,13 +18,11 @@ function ListeObjets() {
 
 const [selectStatus, setSelectStatus] = useState("all")
 
-
     useEffect(() => {
         const recupObjets = async () => {
             try {
                 const reponse = await fetch(API_URL)
                 const result = await reponse.json()
-                console.log(result)
                 setobjet(result)
             } catch (error) {
                 console.log("❌ Aie, Aie erreur", error.message)
@@ -32,9 +30,6 @@ const [selectStatus, setSelectStatus] = useState("all")
         }
         recupObjets()
     }, [])
-
-
-
 
     // Calcule la liste des catégories disponibles à partir des objets reçus
     // useMemo évite de refaire ce calcul à chaque re-render, seulement quand "objet" change
@@ -59,7 +54,6 @@ const [selectStatus, setSelectStatus] = useState("all")
     return (
         <div>
             <h2>Inventaire des objets</h2>
-
 
             {/* Composant enfant distinct : il reçoit juste les catégories
                 et une fonction pour signaler un changement de sélection */}
