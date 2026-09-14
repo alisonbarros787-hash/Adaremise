@@ -32,7 +32,7 @@ function UserBack() {
    const nomObjet = historique.objet || historique.libelle || historique.objet_libelle || "Objet sans nom";
     const dateDepot = historique.date_depot ? new Date(historique.date_depot).toLocaleDateString("fr-FR") : "N/C";
     const statut = historique.statut || historique.statut_objet || "N/C";
-    const categorie = historique.categorie || historique.categorie_libelle || "Général";
+    const categorie = historique.categorie || historique.categorie_libelle || " ";
     const poids = historique.poids ?? historique.poids_kg ?? 0;
 
     return (
