@@ -248,76 +248,133 @@ button:hover, .btn-retour:hover {
 }
 
 /* ============================================================
-   HISTORIQUE / FICHE DÉPÔT — UserHistorique.jsx
-   Version "bandeau coloré"
+   CARTE HISTORIQUE — style "profil" avec bannière + avatar
    ============================================================ */
 .historik {
   background: var(--bg-card);
-  border-radius: var(--radius);
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(13, 27, 42, 0.12);
   margin-top: 1rem;
-  min-height: 200px;      /* force une hauteur minimale, pour qu'elle ne paraisse pas "coupée" */
-  border: 1px solid var(--secondary);
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.historik .btn-retour {
-  margin: 1.5rem 1.5rem 0;
-}
-
-.historik-header {
+/* Bannière colorée en haut, avec un gros pictogramme */
+.historik-banner {
   background: linear-gradient(135deg, var(--primary), var(--accent-dark));
-  color: white;
-  padding: 2rem;          /* plus d'espace autour du titre/icône */
+  height: 140px;
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
 }
 
-.historik-icon {
-  font-size: 2rem;
+.historik-banner-icon {
+  font-size: 3rem;
+  opacity: 0.85;
 }
 
-.historik-header h2 {
-  flex: 1;
+/* Avatar rond qui chevauche la bannière et le corps de la carte */
+.historik-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  border: 4px solid var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  position: absolute;
+  bottom: -36px;
+  left: 24px;
+  box-shadow: 0 4px 10px rgba(13, 27, 42, 0.15);
+}
+
+.historik-body {
+  padding: 48px 24px 24px;
+}
+
+.historik-body h2 {
   font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
 }
 
+.historik-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 2px;
+  margin-bottom: 14px;
+}
+
+/* Badge de statut, façon "pill" comme sur le modèle */
 .historik-badge {
-  background: rgba(255, 255, 255, 0.25);
+  display: inline-block;
+  background: var(--bg-soft);
+  border: 1px solid var(--secondary);
+  color: var(--primary);
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  margin-bottom: 18px;
 }
 
-.historik-details {
-  padding: 2rem;           /* plus d'espace autour des infos */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-}
-
-.detail-item {
+/* Ligne de stats séparées par des traits verticaux */
+.historik-stats {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid var(--bg-soft);
+  border-bottom: 1px solid var(--bg-soft);
+  margin-bottom: 20px;
 }
 
-.detail-label {
-  font-size: 0.8rem;
+.historik-stat {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.historik-stat:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: var(--bg-soft);
+}
+
+.historik-stat-value {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.historik-stat-label {
+  font-size: 0.75rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 700;
+  margin-top: 2px;
 }
 
-.detail-value {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary);
+/* Bouton "Retour" pleine largeur, façon CTA du modèle */
+.historik .btn-retour {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: var(--primary);
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 1rem;
+}
+
+.historik .btn-retour:hover {
+  background-color: var(--primary-hover);
 }
 
 /* ============================================================
