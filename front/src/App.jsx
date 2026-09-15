@@ -4,6 +4,7 @@ import FicheObjet from './FicheObjet.jsx'
 import ListeObjets from './ListeObjet.jsx'
 import UserBack from './UserHistorique.jsx'
 import Depot from './Depot.jsx'
+import FormulaireArticle from './FormulaireArticle.jsx'
 import { Routes, Route } from 'react-router-dom'
 import Stats from './Stat.jsx'
 import Nav from './Nav.jsx'
@@ -30,6 +31,7 @@ function App() {
           <Route path="/objets" element={<ListeObjets />} />
           <Route path="/objets/:id" element={<FicheObjet />} />
           <Route path="/depots" element={<Depot />} />
+          <Route path="/depots/:id/ajouter" element={<FormulaireArticle />} />
           <Route path="/depots/:id" element={<UserBack />} />
           <Route path="/stats" element={<Stats />} />
         </Routes>
