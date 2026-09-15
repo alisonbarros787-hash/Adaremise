@@ -111,5 +111,4 @@ routerObjet.patch('/:id/statut', async (req, res) => {
     }
 });
 
-
 export default routerObjet;

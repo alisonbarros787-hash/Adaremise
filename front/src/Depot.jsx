@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 
-const API_URL = "http://localhost:3000/api/personnes";
+const API_URL = "http://localhost:3000/api/personnes/";
 const DEPOT_URL = "http://localhost:3000/api/depots";
 const CATEGORIE_URL = "http://localhost:3000/api/categories";
 

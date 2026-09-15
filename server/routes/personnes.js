@@ -43,4 +43,3 @@ routerPersonne.get('/', async (req, res) => {
 });
 
 export default routerPersonne
-
