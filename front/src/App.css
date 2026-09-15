@@ -240,3 +240,47 @@ button:hover, .btn-retour:hover {
   font-weight: 700;
   color: var(--primary);
 }
+
+/* Bloc graphique */
+.chart-block {
+  margin-top: 2rem;
+}
+
+.chart-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.chart-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chart-label {
+  width: 70px;
+  font-size: 0.9rem;
+}
+
+.chart-track {
+  flex: 1;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.chart-fill {
+  width: var(--fill-width, 0%);
+  background-color: var(--primary, #3D4C5A);
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.chart-value {
+  width: 70px;
+  text-align: right;
+  font-weight: 600;
+}
