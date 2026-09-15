@@ -14,7 +14,6 @@ function Depot() {
   });
 
   const [depotId, setDepotId] = useState(null);
-
   const [categories, setCategories] = useState([]);
   const [objets, setObjets] = useState([]);
   const [formulaireObjet, setFormulaireObjet] = useState({
@@ -157,7 +156,6 @@ function Depot() {
       {depotId && (
         <>
           <h2>Depot</h2>
-
 
           <h3>Ajouter un article</h3>
           <form onSubmit={envoyerObjet}>
