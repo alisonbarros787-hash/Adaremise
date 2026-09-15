@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { RepairModal } from "./Reparation.jsx"   
+import { RepairModal } from "./Reparation.jsx"   // ⬅ on importe le composant nommé, pas le default
 
 const API_URL = "http://localhost:3000/api/personnes/benevoles"
 
@@ -96,6 +96,7 @@ function Benevole() {
         })}
       </div>
 
+      {/* ⬅ NOUVEAU : la popup ne s'affiche que si un bénévole est sélectionné */}
       {selectedVolunteer && (
         <RepairModal
           volunters={selectedVolunteer}
