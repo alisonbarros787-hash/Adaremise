@@ -216,7 +216,6 @@ function Depot() {
 
             <button type="submit">Ajouter l'article</button>
           </form>
-          
           <ul>
             {objets.map((o) => (
               <li key={o.id}>

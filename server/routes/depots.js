@@ -11,10 +11,20 @@ routerDepot.get('/:id', async (req, res) => {
         const { id } = req.params;
 
         const depotInfo = await pool.query(
-            `SELECT d.type, p.*, o.* 
+            `SELECT  d.type,
+        d.date_depot,
+        p.nom personne_nom,
+        p.prenom personne_prenom,
+        o.id objet_id,
+        o.libelle objet_libelle,
+        o.poids_kg,
+        o.statut,
+        o.etat_arrivee,
+        c.libelle categorie_libelle
              FROM depot d 
              JOIN personne p ON d.personne_id = p.id 
-             LEFT JOIN objet o ON o.depot_id = d.id 
+             LEFT JOIN objet o ON o.depot_id = d.id
+             LEFT JOIN categorie c ON o.categorie_id = c.id
              WHERE d.id = $1`,
             [id]
         );
