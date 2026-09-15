@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 
-const API_URL = "http://localhost:3000/api/personnes/benevoles";
+const API_URL = "http://localhost:3000/api/personnes";
 const DEPOT_URL = "http://localhost:3000/api/depots";
 const CATEGORIE_URL = "http://localhost:3000/api/categories";
 
@@ -113,8 +113,6 @@ function Depot() {
 
   return (
     <div>
-
-      {}
       {!depotId && (
         <form onSubmit={envoyerFormulaire}>
           <select
@@ -156,7 +154,6 @@ function Depot() {
         </form>
       )}
 
-      {}
       {depotId && (
         <>
           <h2>Depot</h2>
@@ -193,7 +190,7 @@ function Depot() {
             >
               <option value="">État à l'arrivée</option>
               <option value="bon_etat">Bon état</option>
-              <option value="casse">Cassé</option>
+              <option value="hors_service">Cassé</option>
               <option value="a_reparer">À réparer</option>
             </select>
             <br />
@@ -219,8 +216,6 @@ function Depot() {
 
             <button type="submit">Ajouter l'article</button>
           </form>
-        </>
-      )}
           <ul>
             {objets.map((o) => (
               <li key={o.id}>
@@ -228,6 +223,8 @@ function Depot() {
               </li>
             ))}
           </ul>
+        </>
+      )}
     </div>
   );
 }
