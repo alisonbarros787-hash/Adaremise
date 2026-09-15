@@ -473,3 +473,117 @@ select:focus {
   border-color: var(--primary, #3D4C5A);
   box-shadow: 0 0 0 2px rgba(61, 76, 90, 0.15);
 }
+
+/* ============================================================
+   MISE EN PAGE SIDEBAR —
+   Transforme .app-container en layout à deux colonnes
+   ============================================================ */
+
+/* .app-container passe de "carte verticale" à "conteneur flex" */
+.app-container {
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  min-height: 640px;
+}
+
+/* Colonne de gauche : logo + navigation verticale */
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background-color: var(--primary);
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(244, 241, 222, 0.2);
+}
+
+.sidebar-header .logo-badge {
+  width: 64px;
+  height: 64px;
+  border-color: var(--accent);
+}
+
+.sidebar-header h1 {
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.sidebar-header .subtitle {
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-top: 0;
+}
+
+/* La nav devient verticale à l'intérieur de la sidebar,
+   sans toucher au style utilisé ailleurs si <nav> est réutilisé */
+.sidebar nav {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 0;
+}
+
+.sidebar nav a {
+  background-color: transparent;
+  color: var(--bg-page);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+.sidebar nav a:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: none;
+}
+
+.sidebar nav a.active {
+  background-color: var(--secondary);
+  color: var(--primary-hover);
+  border-color: transparent;
+}
+
+/* Colonne de droite : contenu des pages */
+.main-panel {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  background-color: var(--bg-card);
+  overflow-y: auto;
+}
+
+/* ============================================================
+   BARRE D'OUTILS BÉNÉVOLES — Benevole.jsx
+   Recherche à gauche, stats à droite, sur la même ligne
+   ============================================================ */
+.benevole-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.benevole-search {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 0;
+}
+
+.benevole-toolbar .stats-banner {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
