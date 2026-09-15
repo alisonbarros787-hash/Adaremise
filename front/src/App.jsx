@@ -14,17 +14,19 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="app-header">
-        <img src={logo} alt="Logo La Remise" className="logo-badge" />
-        <div>
-          <h1>Association - La remise</h1>
-          <p className="subtitle">Gestion des bénévoles et des objets</p>
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <img src={logo} alt="Logo La Remise" className="logo-badge" />
+          <div>
+            <h1>La remise</h1>
+            <p className="subtitle">Bénévoles &amp; objets</p>
+          </div>
         </div>
-      </header>
 
-      <Nav />
+        <Nav />
+      </aside>
 
-      <main className="main-content">
+      <main className="main-panel">
         <Routes>
           <Route path="/" element={<Benevole />} />
           <Route path="/objets" element={<ListeObjets />} />
