@@ -30,11 +30,6 @@ function UserBack() {
     detailUser();
   }, [id]);
 
-  console.log("HISTORIQUE ENTIER:", historique);
-  console.log("LE PREMIER 0:", historique[0]);
-  console.log("HISTORIQUE LIBELLE:", historique.libelle);
-  console.log("TEST SI BON:", historique[0] && historique[0].libelle);
-
   // La 1ère ligne du tableau = les infos du dépôt + la donatrice
   const depot = historique[0];
   if(!depot) return <p>Chargement</p>
