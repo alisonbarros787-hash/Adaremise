@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { RepairModal } from "./Reparation.jsx"   // ⬅ on importe le composant nommé, pas le default
+import { RepairModal } from "./Reparation.jsx"
 
 const API_URL = "http://localhost:3000/api/personnes/benevoles"
 
@@ -15,9 +15,6 @@ function Benevole() {
 
   const [benevole, setBenevole] = useState([])
   const [recherche, setRecherche] = useState("")
-
-  // ⬅ NOUVEAU : contrôle l'ouverture de la popup.
-  // null = fermée. Un objet bénévole = ouverte, pour CE bénévole.
   const [selectedVolunteer, setSelectedVolunteer] = useState(null)
 
   useEffect(() => {
@@ -38,10 +35,9 @@ function Benevole() {
     return nomComplet.includes(recherche.toLowerCase())
   })
 
-  // ⬅ NOUVEAU : appelée par la popup quand une réparation est bien enregistrée
   function handleRepairSaved(repair) {
     console.log("Réparation enregistrée :", repair)
-    // ici vous pourrez par ex. rafraîchir une liste de réparations récentes
+    setSelectedVolunteer(null)
   }
 
   return (
@@ -57,11 +53,10 @@ function Benevole() {
           onChange={(e) => setRecherche(e.target.value)}
         />
 
-        <div className="stats-banner">
-          <div className="stats-banner-item">
-            <div className="stats-banner-value">{benevole.length}</div>
-            <div className="stats-banner-label">Bénévoles actifs</div>
-          </div>
+        {/* Bénévoles actifs sur une seule ligne + italique */}
+        <div className="benevoles-compteur">
+          <span className="nombre-actif">{benevole.length}</span>
+          <span className="texte-actif">bénévoles actifs</span>
         </div>
       </div>
 
@@ -78,13 +73,12 @@ function Benevole() {
               <div className="benevole-avatar">
                 {getInitiales(b.prenom, b.nom)}
               </div>
-              {b.prenom} {b.nom}
+              <span>{b.prenom} {b.nom}</span>
 
-              {/* ⬅ NOUVEAU : bouton Réparer */}
+              {/* Bouton Réparer isolé et stylisé */}
               <button
+                className="btn-reparer"
                 onClick={(e) => {
-                  // Sans stopPropagation, le clic remonterait jusqu'à la div
-                  // parente et déclencherait AUSSI navigate() vers /depots/...
                   e.stopPropagation()
                   setSelectedVolunteer(b)
                 }}
@@ -96,7 +90,7 @@ function Benevole() {
         })}
       </div>
 
-      {/* ⬅ NOUVEAU : la popup ne s'affiche que si un bénévole est sélectionné */}
+      {/* Pop-up Modale */}
       {selectedVolunteer && (
         <RepairModal
           volunters={selectedVolunteer}
