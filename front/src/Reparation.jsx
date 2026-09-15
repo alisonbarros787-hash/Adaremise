@@ -7,7 +7,7 @@ const ENDPOINTS = {
 
 // RepairModal : la popup
 // Ses "props" (ce qu'elle reçoit du parent)
-function RepairModal({ volunters, onClose, onSaved }) {
+export function RepairModal({ volunters, onClose, onSaved }) {
     // volunters : l'objet bénévole déjà sélectionné (pour l'afficher en haut de la popup)
     // onClose : une fonction fournie par le parent, à appeler pour fermer la popup
     // onSaved : une fonction fournie par le parent, à appeler quand la réparation est bien enregistrée
