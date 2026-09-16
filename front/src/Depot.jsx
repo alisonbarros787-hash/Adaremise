@@ -6,14 +6,18 @@ const DEPOT_URL = "http://localhost:3000/api/depots";
 const CATEGORIE_URL = "http://localhost:3000/api/categories";
 
 function Depot() {
+  // ** ================================================ POUR FAIRE LE DEPOT (Formulaire 1)==============
+
   const [personnes, setPersonnes] = useState([]);
   const [formulaire, setFormulaire] = useState({
     personne_id: "",
     date_depot: "",
     type: "",
   });
-
   const [depotId, setDepotId] = useState(null);
+
+  // ** ================================================== POUR AJOUTER UN OBJET (Formulaire 2)==============
+
   const [categories, setCategories] = useState([]);
   const [objets, setObjets] = useState([]);
   const [formulaireObjet, setFormulaireObjet] = useState({
@@ -23,14 +27,18 @@ function Depot() {
     categorie_id: "",
   });
 
+  // =================================================== POUR UN MESSAGE D ERREUR =====================
   const [messageRemplir, setMessageRemplir] = useState("");
 
+
+// ** =================================LES DONNES POUR LES SELECT ===== ============ 
   useEffect(() => {
     const recupDonnees = async () => {
       try {
+        // DONNEES POUR LE SELECT DE BENEVOLES 
         const repPersonnes = await fetch(API_URL);
         setPersonnes(await repPersonnes.json());
-
+        // DONNES POUR LE SELECT DE CATEGORIES
         const repCategories = await fetch(CATEGORIE_URL);
         setCategories(await repCategories.json());
       } catch (error) {
@@ -40,48 +48,66 @@ function Depot() {
     recupDonnees();
   }, []);
 
-  const formulaireRempli = (event) => {
+
+// ** =====================================================================LES EVENT HANDLERS (GESTIONER LES EVENTS)=============================================
+// Le spread copie les propriétés d'un objet dans un nouvel objet et les infos reste intactes si tu les as pas touché
+const formulaireRempli = (event) => {
     setFormulaire({
       ...formulaire,
       [event.target.name]: event.target.value,
     });
   };
 
+  // Le spread copie les propriétés d'un objet dans un nouvel objet et les infos reste intactes si tu les as pas touché
   const formulaireObjetRempli = (event) => {
     setFormulaireObjet({
       ...formulaireObjet,
       [event.target.name]: event.target.value,
+      // On récupère le nom du champ qui a été modifié et on lui donne la nouvelle valeur
     });
   };
 
+
+  // ** =====================
+
   const envoyerFormulaire = async (event) => {
+
+    // si un form est envoye le navigateur recharge toute la page... on dit ne fais pas ça
     event.preventDefault();
 
     try {
+      // la petition. On veut envoyer le formulaire au backend avec fetch en format JSON
       const reponse = await fetch(DEPOT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formulaire),
+        // ca passe d'objet a JSON
       });
 
       if (!reponse.ok) {
         setMessageRemplir("Oups, tous les champs sont obligatoires");
         return;
       }
-
+      // ============================ POUR AJOUTER LE NOUVEAU DEPOT AVEC SON ID==========================
       const nouveauDepot = await reponse.json();
       setDepotId(nouveauDepot.id);
+      // Pour avoir le depot qu'on a cree que cest ici quon obtien l'ID
       setMessageRemplir("");
     } catch (error) {
       console.log("Oups, erreur formulaire", error.message);
     }
   };
 
+
+
+  // ** ===========================POUR CREER UN LOBJET AVEC NOTRE ID
   const envoyerObjet = async (event) => {
+    // le navigateur ne recharge pas la page quand on envoie le formulaire
     event.preventDefault();
 
     try {
-      const reponse = await fetch(`${DEPOT_URL}/${depotId}/objet`, {
+      // On récupère les données JSON envoyées par le backend
+        const reponse = await fetch(`${DEPOT_URL}/${depotId}/objet`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formulaireObjet),
@@ -95,8 +121,11 @@ function Depot() {
         return;
       }
 
+      // =================================== POUR AJOUTER LOBJET A LA LISTE==========================
       const nouvelObjet = await reponse.json();
+      // On récupère les données JSON envoyées par le backend dans la réponse
       setObjets([...objets, nouvelObjet]);
+      // Spread pour copier tous les objets présents et ajoute le nouvel objet à la fin
 
       setFormulaireObjet({
         libelle: "",
@@ -110,7 +139,11 @@ function Depot() {
     }
   };
 
+
+  // *** [[[[[[[[[[[[[[[[[[    LES     RENDERS               ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
   return (
+
+  // Cest le conditionels avec loperateur &&
     <div>
       {!depotId && (
         <form onSubmit={envoyerFormulaire}>
@@ -211,7 +244,6 @@ function Depot() {
             {messageRemplir && (
               <p className="message-erreur">{messageRemplir}</p>
             )}
-
             <button type="submit">Ajouter l'article</button>
           </form>
           <ul>

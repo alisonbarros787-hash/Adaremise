@@ -48,7 +48,7 @@ function UserBack() {
 
   return (
     <div className="card">
-    <p>Crée par</p>
+    <p>Doné par</p>
     <h3 id="nom_benevole">{depot.personne_prenom} {depot.personne_nom}</h3>
       {/* 1. Titre direct au lieu d'une ligne "Objet :" */}
       <h2>{nomObjet}</h2>
