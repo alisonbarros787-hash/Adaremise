@@ -32,7 +32,7 @@ function UserBack() {
 
   // La 1ère ligne du tableau = les infos du dépôt + la donatrice
   const depot = historique[0];
-  if(!depot) return <p>Chargement</p>
+  if (!depot) return <p>Chargement</p>;
   // const nomObjet = historique.objet || historique.libelle || historique.objet_libelle || "Objet sans nom";
   const nomObjet = depot.objet_libelle || "Objet s/ nom";
   // const dateDepot = historique.date_depot ? new Date(historique.date_depot).toLocaleDateString("fr-FR") : "N/C";
@@ -48,10 +48,8 @@ function UserBack() {
 
   return (
     <div className="card">
-      <Link to="/depots" className="btn-back">
-        ← Retour
-      </Link>
-
+    <p>Crée par</p>
+    <h3 id="nom_benevole">{depot.personne_prenom} {depot.personne_nom}</h3>
       {/* 1. Titre direct au lieu d'une ligne "Objet :" */}
       <h2>{nomObjet}</h2>
 
@@ -84,6 +82,9 @@ function UserBack() {
             <strong>{dateDepot}</strong>
           </p>
         </div>
+        <Link to="/depots" className="btn-back">
+          ← Retour
+        </Link>
       </div>
     </div>
   );
