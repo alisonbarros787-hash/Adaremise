@@ -85,7 +85,7 @@ function Benevole() {
                 }}
               >
                  <img src={outils} alt="Image d'outils" className="outils"/> 
-
+ 
               </button>
             </div>
           )
