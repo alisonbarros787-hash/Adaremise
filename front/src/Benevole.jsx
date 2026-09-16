@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { RepairModal } from "./Reparation.jsx"
+import outils from "./assets/outils.png";
 
 const API_URL = "http://localhost:3000/api/personnes/benevoles"
 
@@ -83,7 +84,8 @@ function Benevole() {
                   setSelectedVolunteer(b)
                 }}
               >
-                Réparer
+                 <img src={outils} alt="Image d'outils" className="outils"/> 
+
               </button>
             </div>
           )

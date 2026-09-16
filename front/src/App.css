@@ -260,7 +260,11 @@ body {
   background-color: var(--primary);
   color: #ffffff;
 }
-
+.outils {
+  width: 25px;
+  height: 25px;
+  padding: 2px;
+}
 /* ============================================================
    FILTRES & MENUS DÉROULANTS <select>
    ============================================================ */
