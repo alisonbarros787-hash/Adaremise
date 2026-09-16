@@ -16,6 +16,7 @@ routerDepot.get("/:id", async (req, res) => {
         p.nom personne_nom,
         p.prenom personne_prenom,
         b.prenom benevole_prenom,
+        b.id,
         b.nom benevole_nom,
         o.id objet_id,
         o.libelle objet_libelle,
