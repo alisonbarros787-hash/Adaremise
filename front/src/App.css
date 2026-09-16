@@ -691,3 +691,35 @@ button:hover, .btn-retour:hover {
     transform: translateY(0);
   }
 }
+
+/* ============================================================
+   FOOTER DU SITE
+   ============================================================ */
+.app-footer {
+  margin-top: 2rem;
+  padding: 1.2rem 1rem;
+  border-top: 1px solid var(--secondary);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-content p {
+  margin: 0;
+}
+
+.footer-separator {
+  color: var(--accent-dark);
+}
+
+.footer-subtitle {
+  font-style: italic;
+}
