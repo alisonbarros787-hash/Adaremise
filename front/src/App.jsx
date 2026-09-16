@@ -1,17 +1,16 @@
 import './App.css'
+import { Routes, Route } from 'react-router-dom'
 import Benevole from './Benevole.jsx'
 import FicheObjet from './FicheObjet.jsx'
 import ListeObjets from './ListeObjet.jsx'
 import UserBack from './UserHistorique.jsx'
 import Depot from './Depot.jsx'
-import { Routes, Route } from 'react-router-dom'
 import Stats from './Stat.jsx'
 import Nav from './Nav.jsx'
-import logo from './assets/logo.png';
-
+import Footer from './Footer.jsx'
+import logo from './assets/logo.png'
 
 function App() {
-
   return (
     <div className="app-container">
       <aside className="sidebar">
@@ -35,6 +34,8 @@ function App() {
           <Route path="/depots/:id" element={<UserBack />} />
           <Route path="/stats" element={<Stats />} />
         </Routes>
+
+        <Footer />
       </main>
     </div>
   )
