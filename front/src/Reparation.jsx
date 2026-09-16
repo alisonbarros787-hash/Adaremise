@@ -127,16 +127,7 @@ export function RepairModal({ volunters, onClose, onSaved }) {
             onClose();
         } catch (err) {
             // Si fetch échoue (pas de réseau) OU si res.ok était false : on arrive ici.
-            //
-            // ⚠️ ATTENTION, bug à corriger : la ligne suivante contient une virgule
-            // entre setSaveError(...) et "err". En JavaScript, une virgule entre deux
-            // expressions exécute les deux mais ne "garde" que la dernière valeur.
-            // Ici "err" tout seul ne fait donc RIEN (on ne l'affiche nulle part,
-            // on ne le log pas) : l'erreur détaillée est silencieusement perdue.
-            // Pour la garder utile pendant le développement, mieux vaut écrire :
-            //   console.error(err);
-            //   setSaveError("Impossible d'enregistrer la réparation...");
-            setSaveError("Impossible d'enregistrer la réparation..."), err;
+            setSaveError("Impossible d'enregistrer la réparation...", err);
         } finally {
             // "finally" s'exécute TOUJOURS, que ça ait réussi ou échoué.
             // On réactive donc les boutons dans tous les cas.
