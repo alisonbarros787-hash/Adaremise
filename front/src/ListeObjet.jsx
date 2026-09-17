@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom'
 import FilterCategorie from './Filters.jsx'
 import FiltrerStatus from './FiltrerStatus.jsx'; // import du composant enfant
+import StatusBadge from './PastilleStatut.jsx';
 
 
 const API_URL = "http://localhost:3000/api/objets"
@@ -76,7 +77,7 @@ const [selectStatus, setSelectStatus] = useState("all")
                     <div key={o.objet_id} className="card">
                         <p><Link to={`/objets/${o.objet_id}`}>{o.objet_libelle}</Link></p>
                         <p>{o.categorie_libelle}</p>
-                        <p>{o.statut_objet}</p>
+                       <StatusBadge status={o.statut}/>
                     </div>
                 ))}
             </div>

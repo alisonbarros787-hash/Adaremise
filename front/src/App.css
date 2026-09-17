@@ -167,7 +167,19 @@ body {
   font-weight: bold;
   text-decoration: none;
 }
-
+/* Classe appliquée à l'élément qui affiche le statut */
+.pastille {
+  display: inline-flex;    
+  align-items: center;      
+  gap: 6px;  
+  margin-top: 7px; 
+  margin-left: 5px;            
+  padding: 3px 8px;       
+  border-radius: 30px;    
+  font-size: 12px;        
+  font-weight: 600;       
+  color: white;        
+}
 /* ============================================================
    BÉNÉVOLES — Benevole.jsx
    ============================================================ */
