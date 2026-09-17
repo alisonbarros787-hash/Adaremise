@@ -3,7 +3,20 @@ import { pool } from "../db.js";
 
 const routerCategorie = express.Router();
 
-// ROUTE GET : Toutes les catégories (id + libelle)
+
+/**
+ * @openapi
+ * 
+ * /api/categories:
+ *   get:
+ *     summary: Récupère toutes les categories
+ *     responses:
+ *       200:
+ *         description: 
+ *     error:
+ *       500:
+ *         description: 'Erreur lors de la récupération des données !'
+ */
 routerCategorie.get("/", async (req, res) => {
     try {
         const allCategorie = await pool.query(
@@ -16,6 +29,21 @@ routerCategorie.get("/", async (req, res) => {
     }
 });
 
+/**
+ * @openapi
+ * 
+ * /api/categories/:id:
+ *   get:
+ *     summary: Récupère la premiere categorie
+ *     responses:
+ *       404:
+ *         description:'Catégorie non trouvée.'
+ *       200:
+ *         description: 
+ *     error:
+ *       500:
+ *         description: 'Erreur lors de la récupération de la catégorie !'
+ */
 routerCategorie.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;

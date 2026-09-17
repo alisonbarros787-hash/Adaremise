@@ -3,9 +3,23 @@ import { pool } from "../db.js";
 
 const routerDepot = express.Router();
 
-// ============================================================
-// ROUTE GET : Un dépôt + sa donatrice + la liste des objets qu'il contient
 
+
+/**
+ * @openapi
+ * 
+ * /api/cdepots/:id:
+ *   get:
+ *     summary: Récupère un depot avec lea donatris ainsi que al liste d'objet qu'il correspond
+ *     responses:
+ *       404:
+ *         description: "Aucun dépôt correspondant."
+ *       200:
+ *         description: 
+ *     error:
+ *       500:
+ *         description: "Erreur serveur."
+ */
 routerDepot.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -43,8 +57,22 @@ routerDepot.get("/:id", async (req, res) => {
   }
 });
 
-// ============================================================
-// ROUTE POST : Enregistre un dépôt (personne_id, date_depot, type)
+
+/**
+ * @openapi
+ * 
+ * /api/depots:
+ *   post:
+ *     summary:  Enregistre un dépôt (personne_id, date_depot, type)
+ *     responses:
+ *       400:
+ *         description: `type doit valoir :
+ *       201:
+ *         description: 
+ *     error:
+ *       500:
+ *         description: "Erreur lors de la création du dépôt."
+ */
 
 routerDepot.post("/", async (req, res) => {
   try {
@@ -77,9 +105,20 @@ routerDepot.post("/", async (req, res) => {
   }
 });
 
-// ============================================================
-// ROUTE POST : Ajoute un objet au dépôt (libelle, poids_kg, etat_arrivee, categorie_id)
 
+/**
+ * @openapi
+ * 
+ * /api/depots/:id/objet:
+ *   post:
+ *     summary:  Cree un nouveau dépôt 
+ *     responses:
+ *       400:
+ *         description: "Erreur, ajout interrompu."
+ *       201:
+ *         description: 
+ *   
+ */
 routerDepot.post("/:id/objet", async (req, res) => {
   try {
     const { id } = req.params; // l'id du DÉPÔT, vient de l'URL
