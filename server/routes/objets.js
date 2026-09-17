@@ -4,12 +4,19 @@ import { pool } from "../db.js";
 
 const routerObjet = express.Router();
 
-
-// ============================================================
-// Liste des objets, avec le libellé de leur catégorie
-// Filtrable par categorie_id et/ou statut
-
-
+/**
+ * @openapi
+ * 
+ * /api/objets/:
+ *   get:
+ *     summary:  Liste des objets, avec le libellé de leur catégorie, Filtrable par categorie_id et/ou statut
+ *     responses:
+ *       404:
+ *         description: 'Erreur, aucun objet trouvé.' 
+ *       201:
+ *         description: 
+ *   
+ */
 routerObjet.get('/', async (req, res) => {
     try {
          const { categorie_id, statut } = req.query; // req.query = Paramètres après ? dans l'URL   (ex : ?id=5)
@@ -40,10 +47,22 @@ routerObjet.get('/', async (req, res) => {
 });
 
 
-// ============================================================
-// Un objet + sa catégorie + son dépôt + le nom de la donatrice
+/**
+ * @openapi
+ * 
+ * /api/objets/:id:
+ *   get:
+ *     summary:  Un objet + sa catégorie + son dépôt + le nom de la donatrice
 
-
+ *     responses:
+ *       404:
+ *         description: 'Objet introuvable.'
+ *       201:
+ *         description: 
+ *       500:
+ *         description: 'Erreur serveur.' 
+ *   
+ */
 routerObjet.get('/:id', async (req, res) => {
     try {
         const { id } = req.params; // req.params = Paramètres de route (définis avec :)( ex : /users/:id)
@@ -72,10 +91,22 @@ routerObjet.get('/:id', async (req, res) => {
     }
 });
 
+/**
+ * @openapi
+ * 
+ * /api/objets/:id:
+ *   patch:
+ *     summary: Change le statut d'un objet (statut, prix?)
 
-// ============================================================
-// Change le statut d'un objet (statut, prix?)
-// ============================================================
+ *     responses:
+ *       404:
+ *         description: 'AUCUNE UPDATE !' 
+ *       201:
+ *         description: 
+ *       500:
+ *         description: 'Erreur serveur.' 
+ *   
+ */
 routerObjet.patch('/:id/statut', async (req, res) => {
     try {
         const { statut, prix } = req.body; // req.body  Données envoyées dans le corps de la requête (POST/PUT)

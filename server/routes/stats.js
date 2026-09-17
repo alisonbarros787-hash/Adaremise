@@ -3,7 +3,87 @@ import { pool } from "../db.js";
 
 const routerStat = express.Router();
 
-// ROUTE GET : indicateurs du tableau de bord
+/**
+ * @openapi
+ *  api/stats:
+ *   get:
+ *     summary: Récupère l'ensemble des statistiques globales
+ *     description: Calcule et retourne les indicateurs clés (KPI) de la ressourcerie, incluant les poids, le chiffre d'affaires, le bénévolat et l'évolution mensuelle.
+ *     responses:
+ *       200:
+ *         description: Statistiques récupérées avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 objetsParStatut:
+ *                   type: array
+ *                   description: Nombre d'objets groupés par leur statut actuel.
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       statut:
+ *                         type: string
+ *                         example: "en_rayon"
+ *                       count:
+ *                         type: string
+ *                         description: Le nombre d'objets (renvoyé sous forme de chaîne par PostgreSQL pour les COUNT).
+ *                         example: "124"
+ *                 poidsTotalRecu:
+ *                   type: number
+ *                   nullable: true
+ *                   description: Somme totale du poids de tous les objets collectés (en kg).
+ *                   example: 1250.5
+ *                 poidsDetourne:
+ *                   type: number
+ *                   nullable: true
+ *                   description: Poids total des objets sauvés de la poubelle (statut différent de 'recycle').
+ *                   example: 980.2
+ *                 nbObjetsEnRayon:
+ *                   type: string
+ *                   description: Nombre total d'objets actuellement disponibles en magasin.
+ *                   example: "45"
+ *                 chiffreAffaires:
+ *                   type: number
+ *                   nullable: true
+ *                   description: Cumul des ventes réelles encaissées.
+ *                   example: 3450.75
+ *                 heuresBenevolat:
+ *                   type: number
+ *                   nullable: true
+ *                   description: Nombre total d'heures consacrées aux réparations.
+ *                   example: 120
+ *                 tauxReussiteReparations:
+ *                   type: number
+ *                   description: Pourcentage de réparations qui ont réussi (entre 0 et 100).
+ *                   example: 78.5
+ *                 evolutionCA:
+ *                   type: array
+ *                   description: Historique du chiffre d'affaires cumulé par mois pour les graphiques.
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       mois:
+ *                         type: string
+ *                         description: Année et mois au format YYYY-MM.
+ *                         example: "2026-09"
+ *                       total:
+ *                         type: number
+ *                         description: Chiffre d'affaires réalisé ce mois-ci.
+ *                         example: 450.00
+ *       400:
+ *         description: Une erreur est survenue lors de la récupération des données.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 erreur:
+ *                   type: string
+ *                   example: "ERREUR statistique non trouvé..."
+ */
+
 routerStat.get('/', async (req, res) => {
     try {
         const parStatut = await pool.query(
