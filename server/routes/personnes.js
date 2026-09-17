@@ -3,6 +3,20 @@ import { pool } from "../db.js";
 
 const routerPersonne = express.Router();
 
+
+/**
+ * @openapi
+ * 
+ * /api/personnes/benevoles:
+ *   get:
+ *     summary:  Liste les benevoles par ordre alphabetique
+ *     responses:
+ *       500:
+ *         description: 'Erreur lors de la récupération des bénévoles !' 
+ *       201:
+ *         description: 
+ *   
+ */
 routerPersonne.get('/benevoles', async (req, res) => {
     try {
         const { rows } = await pool.query(
@@ -15,7 +29,20 @@ routerPersonne.get('/benevoles', async (req, res) => {
     }
 });
 
-// ROUTE POST : Crée une donatrice (nom, prenom, telephone?, adherente?):
+
+/**
+ * @openapi
+ * 
+ * /api/personnes:
+ *   post:
+ *     summary: Crée une donatrice (nom, prenom, telephone?, adherente?)
+ *     responses:
+ *       400:
+ *         description: 'Champs obligatoires manquants !' 
+ *       201:
+ *         description: 
+ *   
+ */
 routerPersonne.post('/', async (req, res) => {
     const {nom, prenom, telephone, adherente} = req.body
 
@@ -30,5 +57,30 @@ routerPersonne.post('/', async (req, res) => {
     res.status(201).json(rows[0])
 });
 
-export default routerPersonne
 
+/**
+ * @openapi
+ * 
+ * /api/personnes:
+ *   get:
+ *     summary: liste des donateurs par odre alphabetique
+ *     responses:
+ *       500:
+ *         description: 'Erreur lors de la récupération des personnes !' 
+ *       201:
+ *         description: 
+ *   
+ */
+routerPersonne.get('/', async (req, res) => {
+    try {
+        const { rows } = await pool.query(
+            `SELECT * FROM personne ORDER BY nom ASC;`
+        );
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la récupération des personnes !' });
+    }
+});
+
+export default routerPersonne

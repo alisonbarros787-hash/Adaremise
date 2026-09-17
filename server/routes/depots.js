@@ -3,81 +3,139 @@ import { pool } from "../db.js";
 
 const routerDepot = express.Router();
 
-// ============================================================
-// ROUTE GET : Un dépôt + sa donatrice + la liste des objets qu'il contient
 
-routerDepot.get('/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
 
-        const depotInfo = await pool.query(
-            `SELECT d.type, p.*, o.* 
-             FROM depot d 
-             JOIN personne p ON d.personne_id = p.id 
-             JOIN objet o ON o.depot_id = d.id 
-             WHERE d.id = $1 AND d.type = 'boutique'`,
-            [id]
-        );
-        if (depotInfo.rows.length === 0) {
-            return res.status(404).json({ erreur: 'Aucun dépôt correspondant.' });
-        }
-        
-        res.status(200).json(depotInfo.rows);
-    } catch (erreur) {
-        console.error(erreur);
-        res.status(500).json({ erreur: 'Erreur serveur.' });
+/**
+ * @openapi
+ * 
+ * /api/cdepots/:id:
+ *   get:
+ *     summary: Récupère un depot avec lea donatris ainsi que al liste d'objet qu'il correspond
+ *     responses:
+ *       404:
+ *         description: "Aucun dépôt correspondant."
+ *       200:
+ *         description: 
+ *     error:
+ *       500:
+ *         description: "Erreur serveur."
+ */
+routerDepot.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const depotInfo = await pool.query(
+      `SELECT  d.type,
+        d.date_depot,
+        p.nom personne_nom,
+        p.prenom personne_prenom,
+        b.prenom benevole_prenom,
+        b.id,
+        b.nom benevole_nom,
+        o.id objet_id,
+        o.libelle objet_libelle,
+        o.poids_kg,
+        o.statut,
+        o.etat_arrivee,
+        c.libelle categorie_libelle
+        FROM depot d 
+             JOIN personne p ON d.personne_id = p.id
+             JOIN benevole b ON d.id = b.id
+             LEFT JOIN objet o ON o.depot_id = d.id
+             LEFT JOIN categorie c ON o.categorie_id = c.id
+             WHERE d.id = $1`,
+      [id],
+    );
+    if (depotInfo.rows.length === 0) {
+      return res.status(404).json({ erreur: "Aucun dépôt correspondant." });
     }
+
+    res.status(200).json(depotInfo.rows);
+  } catch (erreur) {
+    console.error(erreur);
+    res.status(500).json({ erreur: "Erreur serveur." });
+  }
 });
 
-// ============================================================
-// ROUTE POST : Enregistre un dépôt (personne_id, date_depot, type)
 
-routerDepot.post('/', async (req, res) => {
-    try {
-        const { personne_id, date_depot, type } = req.body;
+/**
+ * @openapi
+ * 
+ * /api/depots:
+ *   post:
+ *     summary:  Enregistre un dépôt (personne_id, date_depot, type)
+ *     responses:
+ *       400:
+ *         description: `type doit valoir :
+ *       201:
+ *         description: 
+ *     error:
+ *       500:
+ *         description: "Erreur lors de la création du dépôt."
+ */
 
-        // Vérification de la liste blanche AVANT l'insertion
-        const TYPES = ['boutique', 'domicile'];
-        if (!TYPES.includes(type)) {
-            return res.status(400).json({
-                error: `type doit valoir : ${TYPES.join(', ')}`
-            });
-        }
+routerDepot.post("/", async (req, res) => {
+  try {
+    const { personne_id, date_depot, type } = req.body;
+    if (!personne_id || !date_depot || !type) {
+      return res.status(400).json({
+        error: `Tous les champs sont obligatoires`,
+      });
+    }
 
-        const nouveauDepot = await pool.query(
-            `INSERT INTO depot (personne_id, date_depot, type) 
+    // Vérification de la liste blanche AVANT l'insertion
+    const TYPES = ["boutique", "domicile"];
+    if (!TYPES.includes(type)) {
+      return res.status(400).json({
+        error: `type doit valoir : ${TYPES.join(", ")}`,
+      });
+    }
+
+    const nouveauDepot = await pool.query(
+      `INSERT INTO depot (personne_id, date_depot, type) 
              VALUES ($1, $2, $3) 
              RETURNING *`,
-            [personne_id, date_depot, type]
-        );
+      [personne_id, date_depot, type],
+    );
 
-        res.status(201).json(nouveauDepot.rows[0]);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erreur lors de la création du dépôt.' });
-    }
+    res.status(201).json(nouveauDepot.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la création du dépôt." });
+  }
 });
 
-// ============================================================
-// ROUTE POST : Ajoute un objet au dépôt (libelle, poids_kg, etat_arrivee, categorie_id)
 
-routerDepot.post('/:id/objet', async (req, res) => {
-    try {
-        const { id } = req.params; // l'id du DÉPÔT, vient de l'URL
-        const { libelle, poids_kg, etat_arrivee, categorie_id } = req.body;
+/**
+ * @openapi
+ * 
+ * /api/depots/:id/objet:
+ *   post:
+ *     summary:  Cree un nouveau dépôt 
+ *     responses:
+ *       400:
+ *         description: "Erreur, ajout interrompu."
+ *       201:
+ *         description: 
+ *   
+ */
+routerDepot.post("/:id/objet", async (req, res) => {
+  try {
+    const { id } = req.params; // l'id du DÉPÔT, vient de l'URL
+    const { libelle, poids_kg, etat_arrivee, categorie_id } = req.body;
 
-        const nouveauObjet = await pool.query(
-            `INSERT INTO objet (depot_id, libelle, poids_kg, etat_arrivee, categorie_id)
+    const nouveauObjet = await pool.query(
+      `INSERT INTO objet (depot_id, libelle, poids_kg, etat_arrivee, categorie_id)
              VALUES ($1, $2, $3::numeric, $4, $5)
              RETURNING *`,
-            [id, libelle, poids_kg, etat_arrivee, categorie_id]
-        );
+      [id, libelle, poids_kg, etat_arrivee, categorie_id],
+    );
 
-        res.status(201).json(nouveauObjet.rows[0]);
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ error: 'Erreur, ajout interrompu.' });
-    }
+    res.status(201).json(nouveauObjet.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: "Erreur, ajout interrompu." });
+  }
 });
 
 export default routerDepot;
